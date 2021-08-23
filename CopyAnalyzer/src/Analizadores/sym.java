@@ -9,13 +9,15 @@ package Analizadores;
 public class sym {
   /* terminals */
   public static final int ddouble = 10;
-  public static final int cadena = 25;
-  public static final int decimal = 26;
+  public static final int cadena = 24;
+  public static final int decimal = 25;
   public static final int parentesisc = 17;
   public static final int coma = 20;
   public static final int parentesisa = 16;
+  public static final int archivo = 30;
   public static final int pcoma = 21;
-  public static final int numeral = 24;
+  public static final int tituloy = 29;
+  public static final int titulox = 28;
   public static final int graficabarras = 5;
   public static final int corchetec = 19;
   public static final int puntajeespecífico = 8;
@@ -26,13 +28,16 @@ public class sym {
   public static final int igual = 22;
   public static final int EOF = 0;
   public static final int sstring = 9;
-  public static final int variable = 27;
+  public static final int variable = 26;
   public static final int error = 1;
   public static final int definirglobales = 3;
+  public static final int comentarioomu = 32;
   public static final int graficapie = 6;
   public static final int graficalineas = 7;
+  public static final int comentarioo = 31;
   public static final int llavec = 15;
   public static final int valores = 12;
+  public static final int dpuntos = 27;
   public static final int llavea = 14;
   public static final int generarreporteestadistico = 2;
   public static final int compare = 4;
@@ -61,10 +66,15 @@ public class sym {
   "pcoma",
   "igual",
   "dolar",
-  "numeral",
   "cadena",
   "decimal",
-  "variable"
+  "variable",
+  "dpuntos",
+  "titulox",
+  "tituloy",
+  "archivo",
+  "comentarioo",
+  "comentarioomu"
   };
 }
 

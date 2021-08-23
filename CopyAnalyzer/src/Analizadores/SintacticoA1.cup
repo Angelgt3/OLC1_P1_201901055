@@ -1,7 +1,12 @@
 package Analizadores;
 import java_cup.runtime.*;
+import copyanalyzer.*;
 
 parser code{:
+
+    public static String rutas[]=new String[2]; 
+
+
     public void syntax_error(Symbol s){ 
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
@@ -14,16 +19,62 @@ parser code{:
     }  
 :}
 
-terminal String generarreporteestadistico,definirglobales,compare,graficabarras,graficapie,graficalineas,puntajeespecífico,sstring,ddouble,titulo,valores,ejex,llavea,llavec,parentesisa,parentesisc,corchetea,corchetec,coma,pcoma,igual,dolar,numeral,cadena,decimal,variable;
-non terminal String INICIO,ESTADISTICO,INSTRUCCIONES,GLOBALES,COMPARAR;
+terminal String generarreporteestadistico,definirglobales,compare,graficabarras,graficapie,graficalineas,puntajeespecífico,sstring,ddouble,titulo,valores,ejex,llavea,llavec,parentesisa,parentesisc,corchetea,corchetec,coma,pcoma,igual,dolar,cadena,decimal,variable,dpuntos,titulox,tituloy,archivo,comentarioo,comentarioomu;
+non terminal String INICIO, VAOCA,ESTADISTICO,LINEAS,CONTENIDOL,REPE,REPE2,PIE,VAODE,CONTENIDOB,CONTENIDOP,CUERPO2,BARRAS,INSTRUCCIONES,GLOBALES,CUERPO,COMPARAR,COMENTARIO;
 
 start with INICIO;
 
 INICIO::= ESTADISTICO;
-ESTADISTICO::= generarreporteestadistico llavea llavec;
-GLOBALES::= definirglobales llavea llavec;
+ESTADISTICO::= generarreporteestadistico llavea GLOBALES CUERPO;
+CUERPO::= COMPARAR CUERPO2
+        |BARRAS CUERPO
+        |PIE CUERPO
+        |COMENTARIO CUERPO
+        |LINEAS CUERPO;
 
-INSTRUCCIONES::= INSTRUCCIONES sstring variable igual cadena pcoma
-            |INSTRUCCIONES ddouble variable igual decimal pcoma
-            |ddouble variable igual decimal pcoma
-            |sstring variable igual cadena pcoma;
+CUERPO2::= BARRAS CUERPO2
+        |PIE CUERPO2
+        |LINEAS CUERPO2
+        |COMENTARIO CUERPO2
+        |llavec;
+        
+GLOBALES::= definirglobales llavea INSTRUCCIONES;
+INSTRUCCIONES::= sstring variable igual cadena pcoma INSTRUCCIONES
+            |ddouble variable igual decimal pcoma INSTRUCCIONES
+            |COMENTARIO INSTRUCCIONES
+            |llavec;
+
+COMPARAR::= compare parentesisa VAOCA coma VAOCA parentesisc pcoma;
+
+LINEAS::= graficalineas llavea CONTENIDOL;
+CONTENIDOL::=titulo dpuntos VAOCA pcoma CONTENIDOL
+            |archivo dpuntos VAOCA pcoma CONTENIDOL
+            |COMENTARIO CONTENIDOL
+            |llavec;
+
+PIE::= graficapie llavea CONTENIDOP;
+CONTENIDOP::=titulo dpuntos VAOCA pcoma CONTENIDOP
+            |ejex dpuntos corchetea REPE corchetec pcoma CONTENIDOP
+            |valores dpuntos corchetea REPE2 corchetec pcoma CONTENIDOP
+            |COMENTARIO CONTENIDOP
+            |llavec;
+
+BARRAS::= graficabarras llavea CONTENIDOB;
+CONTENIDOB::= titulo dpuntos VAOCA pcoma CONTENIDOB
+            |ejex dpuntos corchetea REPE corchetec pcoma CONTENIDOB
+            |valores dpuntos corchetea REPE2 corchetec pcoma CONTENIDOB
+            |titulox dpuntos VAOCA pcoma CONTENIDOB
+            |tituloy dpuntos VAOCA pcoma CONTENIDOB
+            |COMENTARIO CONTENIDOB
+            |llavec;
+
+REPE::= VAOCA coma REPE
+        |VAOCA;
+REPE2::=VAODE coma REPE2
+        |VAODE;
+VAOCA::= variable
+        |cadena;
+VAODE::= variable   
+        |decimal;
+COMENTARIO::=comentarioo
+        |comentarioomu;

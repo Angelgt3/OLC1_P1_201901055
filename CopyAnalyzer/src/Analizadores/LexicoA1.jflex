@@ -21,7 +21,8 @@ blancos=[ \r\t]+
 cadena=[\"][^\"\n]*[\"]
 decimal=[0-9]+("."[ |0-9]+)?
 variable=[a-zA-Z]([0-9]|[a-zA-Z]|"_")*
-
+comentarioo=("##")(.)*(\n)
+comentarioomu=("#""*"[^"*"]*"*""#")
 
 %%
 
@@ -38,7 +39,9 @@ variable=[a-zA-Z]([0-9]|[a-zA-Z]|"_")*
 "titulo"                            {return new Symbol(sym.titulo,yyline,yychar,yytext());}
 "valores"                           {return new Symbol(sym.valores,yyline,yychar,yytext());}
 "ejex"                              {return new Symbol(sym.ejex,yyline,yychar,yytext());}
-
+"titulox"                            {return new Symbol(sym.titulox,yyline,yychar,yytext());}
+"tituloy"                            {return new Symbol(sym.tituloy,yyline,yychar,yytext());}
+"archivo"                            {return new Symbol(sym.archivo,yyline,yychar,yytext());}
 
 "{"                                  {return new Symbol(sym.llavea,yyline,yychar,yytext());}
 "}"                                  {return new Symbol(sym.llavec,yyline,yychar,yytext());}
@@ -48,10 +51,9 @@ variable=[a-zA-Z]([0-9]|[a-zA-Z]|"_")*
 "]"                                  {return new Symbol(sym.corchetec,yyline,yychar,yytext());}
 ","                                  {return new Symbol(sym.coma,yyline,yychar,yytext());}
 ";"                                  {return new Symbol(sym.pcoma,yyline,yychar,yytext());}
-":"                                  {return new Symbol(sym.pcoma,yyline,yychar,yytext());}
+":"                                  {return new Symbol(sym.dpuntos,yyline,yychar,yytext());}
 "="                                  {return new Symbol(sym.igual,yyline,yychar,yytext());}
 "$"                                 {return new Symbol(sym.dolar,yyline,yychar,yytext());}
-"#"                                  {return new Symbol(sym.numeral,yyline,yychar,yytext());}
 
 \n                                  {yychar=1;}
 
@@ -59,6 +61,8 @@ variable=[a-zA-Z]([0-9]|[a-zA-Z]|"_")*
 {cadena}                            {return new Symbol(sym.cadena,yyline,yychar,yytext());}
 {decimal}                           {return new Symbol(sym.decimal,yyline,yychar,yytext());}
 {variable}                           {return new Symbol(sym.variable,yyline,yychar,yytext());}
+{comentarioo}                           {return new Symbol(sym.comentarioo,yyline,yychar,yytext());}
+{comentarioomu}                           {return new Symbol(sym.comentarioomu,yyline,yychar,yytext());}
 
 . {
     System.out.println("Este es un error lexico: "+yytext()+", en la linea: "+yyline+", en la columna: "+yychar);
