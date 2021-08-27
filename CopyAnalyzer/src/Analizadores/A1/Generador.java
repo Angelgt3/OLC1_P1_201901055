@@ -18,7 +18,7 @@ public class Generador {
     private static void generarAnalizadores() 
     {
         try {
-            String ruta = "src/analizadores/";
+            String ruta = "src/analizadores/A1/";
             String opcFlex[] = {ruta + "LexicoA1.jflex", "-d", ruta};
             jflex.Main.generate(opcFlex);
             

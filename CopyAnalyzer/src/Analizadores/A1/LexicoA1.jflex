@@ -1,4 +1,4 @@
-package Analizadores;
+package Analizadores.A1;
 import java_cup.runtime.Symbol; 
 
 
@@ -60,9 +60,9 @@ comentarioomu=("#""*"[^"*"]*"*""#")
 {blancos}                           {}
 {cadena}                            {return new Symbol(sym.cadena,yyline,yychar,yytext());}
 {decimal}                           {return new Symbol(sym.decimal,yyline,yychar,yytext());}
-{variable}                           {return new Symbol(sym.variable,yyline,yychar,yytext());}
-{comentarioo}                           {return new Symbol(sym.comentarioo,yyline,yychar,yytext());}
-{comentarioomu}                           {return new Symbol(sym.comentarioomu,yyline,yychar,yytext());}
+{variable}                          {return new Symbol(sym.variable,yyline,yychar,yytext());}
+{comentarioo}                       {return new Symbol(sym.comentarioo,yyline,yychar,yytext());}
+{comentarioomu}                     {return new Symbol(sym.comentarioomu,yyline,yychar,yytext());}
 
 . {
     System.out.println("Este es un error lexico: "+yytext()+", en la linea: "+yyline+", en la columna: "+yychar);

@@ -1,0 +1,134 @@
+package Analizadores.A2;
+import java_cup.runtime.*;
+import copyanalyzer.*;
+
+parser code{:
+
+
+
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+    } 
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        " no reconocido."); 
+    }  
+:}
+
+terminal String classe,var,let,constt,truee,falsee,iff,elsee,forr,whilee,doo,switchh,casee,breakk,defaultt,console,log,llavea,llavec,parentesisa,parentesisc,coma,pcoma,igual,dpuntos,not,menor,mayor,andd,orr,suma,resta,multiplicacion,division,modulo,cadena,decimal,id,comentarioo,comentarioomu,caracter,meigual,maigual,diferencia,igualacion,punto,require;
+non terminal String INICIO,CLASE,FUNCIONES,FUNCION,VARIABLES,LINEAS,LINEAS2,PARAMETROS,LINEA,TIPO,VALOR,IF,ELSE,ELIF,IFS,ELIFS,FOR,WHILE,DO,SWITCH,CONDICION,OPRELACIONALES,OPLOGICOS,INICIALIZADOR,CASE,CASES,DEFAULT,CONSOLA,COMENTARIOS,LLAMADA,ENVIAR,PARAMETROS2,IMPORTAR;
+
+start with INICIO;
+
+INICIO::=CLASE;
+CLASE::=classe id llavea FUNCIONES llavec;
+
+FUNCIONES::= FUNCIONES FUNCION 
+            |FUNCION;
+
+FUNCION::=id parentesisa PARAMETROS llavea LINEAS llavec;
+
+PARAMETROS::=VARIABLES parentesisc
+            |parentesisc;
+
+VARIABLES::=VARIABLES coma id
+            |id;
+
+LINEAS2::= LINEAS2 LINEA
+            |LINEA
+            |LINEAS2 breakk
+            |LINEAS2 breakk pcoma
+            |breakk pcoma
+            |breakk;
+
+LINEAS::= LINEAS LINEA
+            |LINEA;
+
+LINEA::=TIPO id igual VALOR pcoma
+        |id igual VALOR pcoma
+        |TIPO id igual VALOR 
+        |id igual VALOR
+        |IFS
+        |FOR
+        |WHILE
+        |DO 
+        |SWITCH
+        |CONSOLA
+        |COMENTARIOS
+        |LLAMADA
+        |IMPORTAR;
+
+TIPO::=var
+        |let
+        |constt;
+
+VALOR::=decimal
+        |cadena
+        |caracter
+        |truee
+        |falsee
+        |id;
+
+IMPORTAR::=TIPO id igual require parentesisa cadena parentesisc pcoma
+        |TIPO id igual require parentesisa cadena parentesisc 
+        |id igual require parentesisa cadena parentesisc
+        |id igual require parentesisa cadena parentesisc pcoma;
+
+LLAMADA::=id parentesisa PARAMETROS2 pcoma
+        |id parentesisa PARAMETROS2;
+PARAMETROS2::=ENVIAR parentesisc
+            |parentesisc;
+ENVIAR::=ENVIAR coma VALOR
+        |VALOR;
+
+COMENTARIOS::=comentarioo
+            |comentarioomu;
+
+CONSOLA::=console punto log parentesisa id parentesisc pcoma
+        |console punto log parentesisa id parentesisc;
+
+SWITCH::=switchh parentesisa id parentesisc llavea CASES DEFAULT;
+CASES::=CASES CASE
+        |CASE;
+        
+CASE::=casee VALOR dpuntos LINEAS breakk pcoma
+        |casee VALOR dpuntos LINEAS breakk;
+DEFAULT::=defaultt dpuntos LINEAS2 llavec
+        |llavec;
+
+DO::=doo llavea LINEAS2 llavec whilee parentesisa CONDICION parentesisc pcoma
+    |doo llavea LINEAS2 llavec whilee parentesisa CONDICION parentesisc;
+
+WHILE::=whilee parentesisa CONDICION parentesisc llavea LINEAS2 llavec;
+
+FOR::=forr parentesisa INICIALIZADOR pcoma CONDICION pcoma id suma suma parentesisc llavea LINEAS2 llavec;
+INICIALIZADOR::=TIPO id igual VALOR
+                |id igual VALOR;
+
+ELIFS::=ELIFS ELIF
+        |ELIF;
+IFS::=IF
+    |IF ELSE 
+    |IF ELIFS ELSE
+    |IF ELIFS;
+
+IF::= iff parentesisa CONDICION parentesisc llavea LINEAS2 llavec;
+ELSE::=elsee llavea LINEAS2 llavec;
+ELIF::=elsee iff parentesisa CONDICION parentesisc llavea LINEAS2 llavec;
+
+CONDICION::=VALOR OPRELACIONALES VALOR;
+
+OPRELACIONALES::=igualacion
+                |diferencia
+                |menor
+                |mayor
+                |maigual
+                |meigual;
+
+OPLOGICOS::=andd
+            |orr
+            |not;
+

@@ -1,0 +1,43 @@
+generarreporteestadistico{
+    definirglobales{
+        string hola="hola mundo";
+        double numero1=0.10;
+        double numero2=2;
+        ##hola soy un comentario
+        string hola2=":)";
+    }
+    ##hola soy un comentario
+    Compare("C:\Users\angge\OneDrive\Documentos\GitHub\-OLC1-Proyecto1_201901055\CopyAnalyzer\src\Analizadores\Archivo1.js", "C:\Users\angge\OneDrive\Documentos\GitHub\-OLC1-Proyecto1_201901055\CopyAnalyzer\src\Analizadores\Archivo2.js"); 
+    #*
+        Hola 
+        mundo 
+        *#
+    graficabarras{
+        ##hola soy un comentario
+        Titulo: reporte1;
+          #*
+        Titulo 
+        *#
+        Ejex: [ "Probabilidad Esperada clase 1", "Probabilidad Obtenida Clase 1", var2, var22, var3, var33];
+        Valores: [ pe1, po1, pe2, po2, pe3,0.20 ];
+        TituloX: "Atributo";
+        TituloY: "Puntaje";
+    }
+
+    GraficaPie{
+        Titulo: "reportepie";
+        #*
+        Hola 
+        mundo 
+        *#
+        Ejex: [ "Probabilidad Esperada clase 1", "Probabilidad Obtenida Clase 1", var2, var22, var3, var33];
+        Valores: [ pe1, po1, pe2, po2, pe3,5,2.68]; 
+    }
+    GraficaLineas{
+        Titulo: reporteResumen;
+        ##hola soy un comentario
+        Archivo: "archivo 1";
+    } 
+##hola soy un comentario
+
+}

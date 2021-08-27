@@ -165,18 +165,21 @@ public class Interfaz extends javax.swing.JFrame {
         String texto=jTextArea2.getText();
         String consola=jTextArea1.getText();
         /*
-        LexicoA1 LexicoA1 = new LexicoA1(new StringReader(texto));
-        SintacticoA1 sintacticoA1 = new SintacticoA1(LexicoA1);
-        */
-       
-        Analizadores.parserA1 sintacticoA1;
-        sintacticoA1 = new Analizadores.parserA1(new Analizadores.LexicoA1(new StringReader(texto)));
+        Analizadores.A1.parserA1 sintacticoA1;
+        sintacticoA1 = new Analizadores.A1.parserA1(new Analizadores.A1.LexicoA1(new StringReader(texto)));
        
         try{
             sintacticoA1.parse();
-            
-            jTextArea1.setText(consola+"\nFinalizo el analisis");
-            //jTextArea1.setText("1: "+Analizadores.parserA1.rutas[0]+"\n2: "+Analizadores.parserA1.rutas[1]);
+        */ 
+        
+        Analizadores.A2.parserA2 sintacticoA2;
+        sintacticoA2 = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(texto)));
+       
+        try{
+            sintacticoA2.parse();
+        
+        jTextArea1.setText(consola+"\nFinalizo el analisis");
+           // jTextArea1.setText("1: "+Analizadores.parserA1.rutas[0]+"\n2: "+Analizadores.parserA1.rutas[1]);
            // Anodo raiz=Analizadores.parserA1.
             
         }

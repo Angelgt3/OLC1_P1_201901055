@@ -1,10 +1,11 @@
-package Analizadores;
+package Analizadores.A1;
 import java_cup.runtime.*;
 import copyanalyzer.*;
 
 parser code{:
 
     public static String rutas[]=new String[2]; 
+    
 
 
     public void syntax_error(Symbol s){ 
@@ -44,7 +45,7 @@ INSTRUCCIONES::= sstring variable igual cadena pcoma INSTRUCCIONES
             |COMENTARIO INSTRUCCIONES
             |llavec;
 
-COMPARAR::= compare parentesisa VAOCA coma VAOCA parentesisc pcoma;
+COMPARAR::= compare parentesisa cadena:r1 coma cadena:r2 parentesisc pcoma      {:rutas[0]=r1;rutas[1]=r2;:}; 
 
 LINEAS::= graficalineas llavea CONTENIDOL;
 CONTENIDOL::=titulo dpuntos VAOCA pcoma CONTENIDOL
