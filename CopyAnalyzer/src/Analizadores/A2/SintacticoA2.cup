@@ -4,6 +4,14 @@ import copyanalyzer.*;
 
 parser code{:
 
+    public static int cidm=0;
+    public static String idclase;
+    public static String idmetodos[]=new String[100];
+
+    public static void gMetodos(int cont, String nombre){
+        idmetodos[cont]=nombre;
+    }
+
 
 
     public void syntax_error(Symbol s){ 
@@ -19,17 +27,43 @@ parser code{:
 :}
 
 terminal String classe,var,let,constt,truee,falsee,iff,elsee,forr,whilee,doo,switchh,casee,breakk,defaultt,console,log,llavea,llavec,parentesisa,parentesisc,coma,pcoma,igual,dpuntos,not,menor,mayor,andd,orr,suma,resta,multiplicacion,division,modulo,cadena,decimal,id,comentarioo,comentarioomu,caracter,meigual,maigual,diferencia,igualacion,punto,require;
-non terminal String INICIO,CLASE,FUNCIONES,FUNCION,VARIABLES,LINEAS,LINEAS2,PARAMETROS,LINEA,TIPO,VALOR,IF,ELSE,ELIF,IFS,ELIFS,FOR,WHILE,DO,SWITCH,CONDICION,OPRELACIONALES,OPLOGICOS,INICIALIZADOR,CASE,CASES,DEFAULT,CONSOLA,COMENTARIOS,LLAMADA,ENVIAR,PARAMETROS2,IMPORTAR;
+non terminal String INICIO,CLASE,FUNCIONES,FUNCION,VARIABLES,VARIABLE,LINEAS,LINEAS2,PARAMETROS,LINEA,TIPO,IF,ELSE,ELIF,IFS,ELIFS,FOR,WHILE,DO,SWITCH,EXP,INICIALIZADOR,CASE,CASES,DEFAULT,CONSOLA,COMENTARIOS,LLAMADA,ENVIAR,PARAMETROS2,IMPORTAR,LINFUERA,FUERA,FUERA2,FUERA3;
+
+precedence left igualacion,diferencia,menor,mayor,meigual,maigual;
+precedence left andd;
+precedence left orr;
+precedence left suma,resta;
+precedence left multiplicacion,division,modulo;
+precedence right not;
 
 start with INICIO;
 
-INICIO::=CLASE;
-CLASE::=classe id llavea FUNCIONES llavec;
+INICIO::=CLASE:va {:idclase=va;:};
+CLASE::=FUERA id llavea FUNCIONES FUERA2;
+
+FUERA::=FUERA COMENTARIOS
+        |COMENTARIOS classe
+        |classe;
+
+FUERA2::=llavec FUERA3
+        |llavec;
+FUERA3::=FUERA3 COMENTARIOS
+        |COMENTARIOS;
+
+LINFUERA::=TIPO id igual EXP pcoma
+        |id igual EXP pcoma
+        |TIPO id igual EXP 
+        |id igual EXP
+        |TIPO id pcoma
+        |TIPO id 
+        |COMENTARIOS;
 
 FUNCIONES::= FUNCIONES FUNCION 
-            |FUNCION;
+            |FUNCION
+            |FUNCIONES LINFUERA
+            |LINFUERA;
 
-FUNCION::=id parentesisa PARAMETROS llavea LINEAS llavec;
+FUNCION::=id:vai parentesisa PARAMETROS llavea LINEAS llavec {:gMetodos(cidm,vai);cidm++;:};
 
 PARAMETROS::=VARIABLES parentesisc
             |parentesisc;
@@ -47,10 +81,7 @@ LINEAS2::= LINEAS2 LINEA
 LINEAS::= LINEAS LINEA
             |LINEA;
 
-LINEA::=TIPO id igual VALOR pcoma
-        |id igual VALOR pcoma
-        |TIPO id igual VALOR 
-        |id igual VALOR
+LINEA::=VARIABLE
         |IFS
         |FOR
         |WHILE
@@ -61,16 +92,40 @@ LINEA::=TIPO id igual VALOR pcoma
         |LLAMADA
         |IMPORTAR;
 
+VARIABLE::=TIPO id igual EXP pcoma
+        |id igual EXP pcoma
+        |TIPO id igual EXP 
+        |id igual EXP
+        |TIPO id pcoma
+        |TIPO id 
+        |TIPO id multiplicacion igual EXP
+        |TIPO id division igual EXP
+        |TIPO id suma igual EXP
+        |TIPO id resta igual EXP
+        |TIPO id modulo igual EXP
+        |id multiplicacion igual EXP
+        |id division igual EXP
+        |id suma igual EXP
+        |id resta igual EXP
+        |id modulo igual EXP 
+        |TIPO id multiplicacion igual EXP pcoma
+        |TIPO id division igual EXP pcoma
+        |TIPO id suma igual EXP pcoma
+        |TIPO id resta igual EXP pcoma
+        |TIPO id modulo igual EXP pcoma
+        |id multiplicacion igual EXP pcoma
+        |id division igual EXP pcoma
+        |id suma igual EXP pcoma
+        |id resta igual EXP pcoma
+        |id modulo igual EXP pcoma
+        |id suma suma 
+        |id suma suma pcoma
+        |id resta resta 
+        |id resta resta pcoma;
+
 TIPO::=var
         |let
         |constt;
-
-VALOR::=decimal
-        |cadena
-        |caracter
-        |truee
-        |falsee
-        |id;
 
 IMPORTAR::=TIPO id igual require parentesisa cadena parentesisc pcoma
         |TIPO id igual require parentesisa cadena parentesisc 
@@ -81,54 +136,67 @@ LLAMADA::=id parentesisa PARAMETROS2 pcoma
         |id parentesisa PARAMETROS2;
 PARAMETROS2::=ENVIAR parentesisc
             |parentesisc;
-ENVIAR::=ENVIAR coma VALOR
-        |VALOR;
+ENVIAR::=ENVIAR coma EXP
+        |EXP;
 
 COMENTARIOS::=comentarioo
             |comentarioomu;
 
-CONSOLA::=console punto log parentesisa id parentesisc pcoma
-        |console punto log parentesisa id parentesisc;
+CONSOLA::=console punto log parentesisa EXP parentesisc pcoma
+        |console punto log parentesisa EXP parentesisc;
 
 SWITCH::=switchh parentesisa id parentesisc llavea CASES DEFAULT;
 CASES::=CASES CASE
         |CASE;
         
-CASE::=casee VALOR dpuntos LINEAS breakk pcoma
-        |casee VALOR dpuntos LINEAS breakk;
+CASE::=casee EXP dpuntos LINEAS breakk pcoma
+        |casee EXP dpuntos LINEAS breakk;
 DEFAULT::=defaultt dpuntos LINEAS2 llavec
         |llavec;
 
-DO::=doo llavea LINEAS2 llavec whilee parentesisa CONDICION parentesisc pcoma
-    |doo llavea LINEAS2 llavec whilee parentesisa CONDICION parentesisc;
+DO::=doo llavea LINEAS2 llavec whilee parentesisa EXP parentesisc pcoma
+    |doo llavea LINEAS2 llavec whilee parentesisa EXP parentesisc;
 
-WHILE::=whilee parentesisa CONDICION parentesisc llavea LINEAS2 llavec;
+WHILE::=whilee parentesisa EXP parentesisc llavea LINEAS2 llavec;
 
-FOR::=forr parentesisa INICIALIZADOR pcoma CONDICION pcoma id suma suma parentesisc llavea LINEAS2 llavec;
-INICIALIZADOR::=TIPO id igual VALOR
-                |id igual VALOR;
+FOR::=forr parentesisa INICIALIZADOR pcoma EXP pcoma LINEA parentesisc llavea LINEAS2 llavec;
+INICIALIZADOR::=TIPO id igual EXP
+                |id igual EXP;
 
 ELIFS::=ELIFS ELIF
         |ELIF;
 IFS::=IF
     |IF ELSE 
     |IF ELIFS ELSE
-    |IF ELIFS;
+    |IF ELIFS
+    |iff parentesisa EXP parentesisc LINEA;
 
-IF::= iff parentesisa CONDICION parentesisc llavea LINEAS2 llavec;
+IF::=iff parentesisa EXP parentesisc llavea LINEAS2 llavec;
 ELSE::=elsee llavea LINEAS2 llavec;
-ELIF::=elsee iff parentesisa CONDICION parentesisc llavea LINEAS2 llavec;
+ELIF::=elsee iff parentesisa EXP parentesisc llavea LINEAS2 llavec;
 
-CONDICION::=VALOR OPRELACIONALES VALOR;
-
-OPRELACIONALES::=igualacion
-                |diferencia
-                |menor
-                |mayor
-                |maigual
-                |meigual;
-
-OPLOGICOS::=andd
-            |orr
-            |not;
-
+EXP::=EXP suma EXP
+    |EXP resta EXP
+    |EXP multiplicacion EXP
+    |EXP division EXP
+    |EXP multiplicacion multiplicacion EXP
+    |EXP modulo EXP
+    |EXP multiplicacion igual EXP
+    |EXP suma igual EXP
+    |EXP menor EXP
+    |EXP meigual EXP
+    |EXP mayor EXP
+    |EXP maigual EXP
+    |EXP diferencia EXP
+    |EXP igualacion EXP
+    |EXP orr EXP
+    |EXP andd EXP
+    |parentesisa EXP parentesisc
+    |resta EXP
+    |not EXP
+    |decimal
+    |cadena
+    |id
+    |caracter
+    |truee
+    |falsee;

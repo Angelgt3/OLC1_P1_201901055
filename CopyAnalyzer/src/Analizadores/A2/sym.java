@@ -27,6 +27,7 @@ public class sym {
   public static final int elsee = 9;
   public static final int igualacion = 46;
   public static final int casee = 14;
+  public static final int andd = 30;
   public static final int classe = 2;
   public static final int menor = 28;
   public static final int comentarioo = 40;
@@ -44,13 +45,12 @@ public class sym {
   public static final int pcoma = 24;
   public static final int mayor = 29;
   public static final int breakk = 15;
-  public static final int or = 31;
   public static final int meigual = 43;
   public static final int punto = 47;
   public static final int forr = 10;
   public static final int defaultt = 16;
   public static final int id = 39;
-  public static final int and = 30;
+  public static final int orr = 31;
   public static final int not = 27;
   public static final int division = 35;
   public static final int comentarioomu = 41;
@@ -88,8 +88,8 @@ public class sym {
   "not",
   "menor",
   "mayor",
-  "and",
-  "or",
+  "andd",
+  "orr",
   "suma",
   "resta",
   "multiplicacion",

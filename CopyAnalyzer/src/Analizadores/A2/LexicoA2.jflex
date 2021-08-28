@@ -18,9 +18,9 @@ import java_cup.runtime.Symbol;
 
 blancos=[ \r\t]+
 cadena=[\"][^\"\n]*[\"]
-caracter=[\'][^\'\n][\']
+caracter=[\'][^\'\n]?[\']
 decimal=[0-9]+("."[ |0-9]+)?
-id=[a-zA-Z]([0-9]|[a-zA-Z]|"_")*
+id=[a-zA-ZÀ-ÿ\u00f1\u00d1]([0-9]|[a-zA-ZÀ-ÿ\u00f1\u00d1]|"_")*
 comentarioo=("//")(.)*(\n)
 comentarioomu=("/""*"[^"*"]*"*""/")
 igualacion=("=""=")
@@ -29,6 +29,7 @@ maigual=(">""=")
 meigual=("<""=")
 andd=("&""&")
 orr=("|""|")
+
     
 %%
 

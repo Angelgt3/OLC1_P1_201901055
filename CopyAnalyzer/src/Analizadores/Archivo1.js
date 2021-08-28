@@ -1,5 +1,7 @@
+//Autor Angel
 class car{
-
+    //Prubea 1
+    var fuera=true;
     general(color,modelo,placa){
         const variable5=50.5
         const variable6='c';/*
@@ -22,6 +24,8 @@ class car{
 
             default:
                 A=0.2;console.log(xd);
+                console.log("hola mubdo");
+                console.log((2+2)/2*5*(5)**5);
            } 
            switch(numero){
             case 0:
@@ -51,7 +55,7 @@ class car{
             var saludo="hi"
             if(20<15){
                 let nose=false
-                if (true==true) {
+                if (x>(2+2)*2) {
                     const p=0;
                     for(let i = 0; i < 10; i++){
                         H=true;
@@ -67,7 +71,7 @@ class car{
                 524
             }*/
             }
-            else if(true==false){
+            else if(x>=10-5){
                 const aa="x";
                 break;
             }
@@ -91,7 +95,7 @@ class car{
         else if(20<5){
             let b=true;
             let b=true;
-            for( i = 0; i < 10; i++){
+            for( i = 0; i < 10-2; i++){
                 for(let i = 0; i < 10; i++){
                     H=true;
                     do{
@@ -114,7 +118,7 @@ class car{
         }
         else{
             
-        while (a0<=ID) {
+        while (a0<=dD) {
             const a=50.2
             break;
         }
@@ -149,7 +153,7 @@ class car{
             do{
                 let b=true;
                 break;
-            }while(i>=10)
+            }while(i>=(10%6))
         }
         
     }
