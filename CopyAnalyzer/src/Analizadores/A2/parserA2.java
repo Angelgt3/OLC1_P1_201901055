@@ -843,14 +843,30 @@ public class parserA2 extends java_cup.runtime.lr_parser {
 
 
     public static int cidm=0;
+    public static int cidv=0;
+    public static int ccpa=0;
+    public static int cco=0;
     public static String idclase;
+    public static int lineasclase;
+    public static String vcomentarios[]=new String[100];
     public static String idmetodos[]=new String[100];
+    public static int cantparemetro[]=new int[100];
+    public static int lineasmetodo[]=new int[100];
+    public static String idvariables[]=new String[200];
 
-    public static void gMetodos(int cont, String nombre){
+    public static void gMetodos(int cont, String nombre, int cant,int lineas){
         idmetodos[cont]=nombre;
+        cantparemetro[cont]=cant;
+        lineasmetodo[cont]=lineas;
+        
     }
-
-
+    public static void gVariable(int cont,String nombre){
+        idvariables[cont]=nombre;
+    }
+    public static void ccomentario(int cont, String comen){
+        vcomentarios[cont]=comen;
+    }
+ 
 
     public void syntax_error(Symbol s){ 
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
@@ -906,10 +922,7 @@ class CUP$parserA2$actions {
           case 1: // INICIO ::= CLASE 
             {
               String RESULT =null;
-		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
-		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).right;
-		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.peek()).value;
-		idclase=va;
+
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("INICIO",0, ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -918,7 +931,13 @@ class CUP$parserA2$actions {
           case 2: // CLASE ::= FUERA id llavea FUNCIONES FUERA2 
             {
               String RESULT =null;
-
+		int vacleft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int vacright = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+                int vacleft2 = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int clineas= (vacleft2-vacleft-1);
+		String vac = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		idclase=vac;
+                lineasclase=clineas;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("CLASE",1, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -990,7 +1009,10 @@ class CUP$parserA2$actions {
           case 10: // LINFUERA ::= TIPO id igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("LINFUERA",31, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -999,7 +1021,10 @@ class CUP$parserA2$actions {
           case 11: // LINFUERA ::= id igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("LINFUERA",31, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1008,7 +1033,10 @@ class CUP$parserA2$actions {
           case 12: // LINFUERA ::= TIPO id igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("LINFUERA",31, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1017,7 +1045,10 @@ class CUP$parserA2$actions {
           case 13: // LINFUERA ::= id igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("LINFUERA",31, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1026,7 +1057,10 @@ class CUP$parserA2$actions {
           case 14: // LINFUERA ::= TIPO id pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("LINFUERA",31, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1035,7 +1069,10 @@ class CUP$parserA2$actions {
           case 15: // LINFUERA ::= TIPO id 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.peek()).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("LINFUERA",31, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1091,8 +1128,10 @@ class CUP$parserA2$actions {
               String RESULT =null;
 		int vaileft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).left;
 		int vairight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).right;
-		String vai = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).value;
-		gMetodos(cidm,vai);cidm++;
+                int vaileft2 = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int clineas= (vaileft2-vaileft-1);
+                String vai = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).value;
+                gMetodos(cidm,vai,ccpa,clineas);ccpa=0;cidm++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("FUNCION",3, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1119,7 +1158,7 @@ class CUP$parserA2$actions {
           case 24: // VARIABLES ::= VARIABLES coma id 
             {
               String RESULT =null;
-
+		ccpa++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLES",4, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1128,7 +1167,7 @@ class CUP$parserA2$actions {
           case 25: // VARIABLES ::= id 
             {
               String RESULT =null;
-
+		ccpa++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLES",4, ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1299,7 +1338,10 @@ class CUP$parserA2$actions {
           case 44: // VARIABLE ::= TIPO id igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1308,7 +1350,10 @@ class CUP$parserA2$actions {
           case 45: // VARIABLE ::= id igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1317,7 +1362,10 @@ class CUP$parserA2$actions {
           case 46: // VARIABLE ::= TIPO id igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1326,7 +1374,10 @@ class CUP$parserA2$actions {
           case 47: // VARIABLE ::= id igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1335,7 +1386,10 @@ class CUP$parserA2$actions {
           case 48: // VARIABLE ::= TIPO id pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1344,7 +1398,10 @@ class CUP$parserA2$actions {
           case 49: // VARIABLE ::= TIPO id 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.peek()).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-1)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1353,7 +1410,10 @@ class CUP$parserA2$actions {
           case 50: // VARIABLE ::= TIPO id multiplicacion igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1362,7 +1422,10 @@ class CUP$parserA2$actions {
           case 51: // VARIABLE ::= TIPO id division igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1371,7 +1434,10 @@ class CUP$parserA2$actions {
           case 52: // VARIABLE ::= TIPO id suma igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1380,7 +1446,10 @@ class CUP$parserA2$actions {
           case 53: // VARIABLE ::= TIPO id resta igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1389,7 +1458,10 @@ class CUP$parserA2$actions {
           case 54: // VARIABLE ::= TIPO id modulo igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1398,7 +1470,10 @@ class CUP$parserA2$actions {
           case 55: // VARIABLE ::= id multiplicacion igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1407,7 +1482,10 @@ class CUP$parserA2$actions {
           case 56: // VARIABLE ::= id division igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1416,7 +1494,10 @@ class CUP$parserA2$actions {
           case 57: // VARIABLE ::= id suma igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1425,7 +1506,10 @@ class CUP$parserA2$actions {
           case 58: // VARIABLE ::= id resta igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1434,7 +1518,10 @@ class CUP$parserA2$actions {
           case 59: // VARIABLE ::= id modulo igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1443,7 +1530,10 @@ class CUP$parserA2$actions {
           case 60: // VARIABLE ::= TIPO id multiplicacion igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1452,7 +1542,10 @@ class CUP$parserA2$actions {
           case 61: // VARIABLE ::= TIPO id division igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1461,7 +1554,10 @@ class CUP$parserA2$actions {
           case 62: // VARIABLE ::= TIPO id suma igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1470,7 +1566,10 @@ class CUP$parserA2$actions {
           case 63: // VARIABLE ::= TIPO id resta igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1479,7 +1578,10 @@ class CUP$parserA2$actions {
           case 64: // VARIABLE ::= TIPO id modulo igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1488,7 +1590,10 @@ class CUP$parserA2$actions {
           case 65: // VARIABLE ::= id multiplicacion igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1497,7 +1602,10 @@ class CUP$parserA2$actions {
           case 66: // VARIABLE ::= id division igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1506,7 +1614,10 @@ class CUP$parserA2$actions {
           case 67: // VARIABLE ::= id suma igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1515,7 +1626,10 @@ class CUP$parserA2$actions {
           case 68: // VARIABLE ::= id resta igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1524,7 +1638,10 @@ class CUP$parserA2$actions {
           case 69: // VARIABLE ::= id modulo igual EXP pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-4)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1533,7 +1650,10 @@ class CUP$parserA2$actions {
           case 70: // VARIABLE ::= id suma suma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1542,7 +1662,10 @@ class CUP$parserA2$actions {
           case 71: // VARIABLE ::= id suma suma pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1551,7 +1674,10 @@ class CUP$parserA2$actions {
           case 72: // VARIABLE ::= id resta resta 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1560,7 +1686,10 @@ class CUP$parserA2$actions {
           case 73: // VARIABLE ::= id resta resta pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("VARIABLE",5, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1596,7 +1725,10 @@ class CUP$parserA2$actions {
           case 77: // IMPORTAR ::= TIPO id igual require parentesisa cadena parentesisc pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("IMPORTAR",30, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-7)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1605,7 +1737,10 @@ class CUP$parserA2$actions {
           case 78: // IMPORTAR ::= TIPO id igual require parentesisa cadena parentesisc 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("IMPORTAR",30, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1614,7 +1749,10 @@ class CUP$parserA2$actions {
           case 79: // IMPORTAR ::= id igual require parentesisa cadena parentesisc 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("IMPORTAR",30, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-5)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1623,7 +1761,10 @@ class CUP$parserA2$actions {
           case 80: // IMPORTAR ::= id igual require parentesisa cadena parentesisc pcoma 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("IMPORTAR",30, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-6)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1686,7 +1827,10 @@ class CUP$parserA2$actions {
           case 87: // COMENTARIOS ::= comentarioo 
             {
               String RESULT =null;
-
+		int caleft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int caright = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).right;
+		String ca = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.peek()).value;
+		ccomentario(cco,ca);cco++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("COMENTARIOS",26, ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1695,7 +1839,10 @@ class CUP$parserA2$actions {
           case 88: // COMENTARIOS ::= comentarioomu 
             {
               String RESULT =null;
-
+		int caleft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int caright = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).right;
+		String ca = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.peek()).value;
+		ccomentario(cco,ca);cco++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("COMENTARIOS",26, ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1821,7 +1968,10 @@ class CUP$parserA2$actions {
           case 102: // INICIALIZADOR ::= TIPO id igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("INICIALIZADOR",21, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-3)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -1830,7 +1980,10 @@ class CUP$parserA2$actions {
           case 103: // INICIALIZADOR ::= id igual EXP 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("INICIALIZADOR",21, ((java_cup.runtime.Symbol)CUP$parserA2$stack.elementAt(CUP$parserA2$top-2)), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;
@@ -2118,7 +2271,10 @@ class CUP$parserA2$actions {
           case 135: // EXP ::= id 
             {
               String RESULT =null;
-
+		int valeft = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).left;
+		int varight = ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()).right;
+		String va = (String)((java_cup.runtime.Symbol) CUP$parserA2$stack.peek()).value;
+		gVariable(cidv,va);cidv++;
               CUP$parserA2$result = parser.getSymbolFactory().newSymbol("EXP",20, ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA2$stack.peek()), RESULT);
             }
           return CUP$parserA2$result;

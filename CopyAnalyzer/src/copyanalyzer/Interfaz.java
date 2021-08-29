@@ -163,7 +163,6 @@ public class Interfaz extends javax.swing.JFrame {
         System.out.println("*Se Ejecuta*");
         
         String texto=jTextArea2.getText();
-        String consola=jTextArea1.getText();
         /*
         Analizadores.A1.parserA1 sintacticoA1;
         sintacticoA1 = new Analizadores.A1.parserA1(new Analizadores.A1.LexicoA1(new StringReader(texto)));
@@ -177,8 +176,27 @@ public class Interfaz extends javax.swing.JFrame {
        
         try{
             sintacticoA2.parse();
+            jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase);
         
-        jTextArea1.setText(consola+"\nFinalizo el analisis");
+            for(int i=0;i<Analizadores.A2.parserA2.idmetodos.length;i++){
+                if (Analizadores.A2.parserA2.idmetodos[i] != null) {
+                    jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Analizadores.A2.parserA2.idmetodos[i]+" Parametros: "+Analizadores.A2.parserA2.cantparemetro[i]+" Lineas:"+Analizadores.A2.parserA2.lineasmetodo[i]);
+                }
+                else{break;}
+            }
+            for(int i=0;i<Analizadores.A2.parserA2.idvariables.length;i++){
+                if (Analizadores.A2.parserA2.idvariables[i] != null) {
+                    jTextArea1.setText(jTextArea1.getText()+"\n Variable: "+Analizadores.A2.parserA2.idvariables[i]);
+                }
+                else{break;}
+            }
+            for(int i=0;i<Analizadores.A2.parserA2.vcomentarios.length;i++){
+                if (Analizadores.A2.parserA2.vcomentarios[i] != null) {
+                    jTextArea1.setText(jTextArea1.getText()+"\n Comentario: "+Analizadores.A2.parserA2.vcomentarios[i]);
+                }
+                else{break;}
+            }
+            jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
            // jTextArea1.setText("1: "+Analizadores.parserA1.rutas[0]+"\n2: "+Analizadores.parserA1.rutas[1]);
            // Anodo raiz=Analizadores.parserA1.
             
