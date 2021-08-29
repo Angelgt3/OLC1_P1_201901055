@@ -63,9 +63,9 @@ FUERA3::=FUERA3 COMENTARIOS
         |COMENTARIOS;
 
 LINFUERA::=TIPO id:va igual EXP pcoma  {:gVariable(cidv,va);cidv++;:}
-        |id:va igual EXP pcoma  {:gVariable(cidv,va);cidv++;:}
+        |id:va igual EXP pcoma  
         |TIPO id:va igual EXP   {:gVariable(cidv,va);cidv++;:}
-        |id:va igual EXP    {:gVariable(cidv,va);cidv++;:}
+        |id:va igual EXP    
         |TIPO id:va pcoma   {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va     {:gVariable(cidv,va);cidv++;:}
         |COMENTARIOS;   
@@ -80,8 +80,8 @@ FUNCION::=id:vai parentesisa PARAMETROS llavea LINEAS llavec {:gMetodos(cidm,vai
 PARAMETROS::=VARIABLES parentesisc 
             |parentesisc;
 
-VARIABLES::=VARIABLES coma id {:ccpa++;:}
-            |id {:ccpa++;:};
+VARIABLES::=VARIABLES coma id:va {:ccpa++;gVariable(cidv,va);cidv++;:}
+            |id:va {:ccpa++;gVariable(cidv,va);cidv++;:};
 
 LINEAS2::= LINEAS2 LINEA
             |LINEA
@@ -105,9 +105,9 @@ LINEA::=VARIABLE
         |IMPORTAR;
 
 VARIABLE::=TIPO id:va igual EXP pcoma   {:gVariable(cidv,va);cidv++;:}
-        |id:va igual EXP pcoma  {:gVariable(cidv,va);cidv++;:}
+        |id:va igual EXP pcoma  
         |TIPO id:va igual EXP   {:gVariable(cidv,va);cidv++;:}
-        |id:va igual EXP    {:gVariable(cidv,va);cidv++;:}
+        |id:va igual EXP    
         |TIPO id:va pcoma   {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va     {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va multiplicacion igual EXP    {:gVariable(cidv,va);cidv++;:}
@@ -115,25 +115,24 @@ VARIABLE::=TIPO id:va igual EXP pcoma   {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va suma igual EXP  {:gVariable(cidv,va);cidv++;:}  
         |TIPO id:va resta igual EXP {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va modulo igual EXP    {:gVariable(cidv,va);cidv++;:}
-        |id:va multiplicacion igual EXP {:gVariable(cidv,va);cidv++;:}
-        |id:va division igual EXP   {:gVariable(cidv,va);cidv++;:}
-        |id:va suma igual EXP   {:gVariable(cidv,va);cidv++;:}
-        |id:va resta igual EXP  {:gVariable(cidv,va);cidv++;:}
-        |id:va modulo igual EXP     {:gVariable(cidv,va);cidv++;:}
+        |id:va multiplicacion igual EXP 
+        |id:va division igual EXP 
+        |id:va resta igual EXP  
+        |id:va modulo igual EXP 
         |TIPO id:va multiplicacion igual EXP pcoma  {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va division igual EXP pcoma    {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va suma igual EXP pcoma    {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va resta igual EXP pcoma   {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va modulo igual EXP pcoma  {:gVariable(cidv,va);cidv++;:}
-        |id:va multiplicacion igual EXP pcoma   {:gVariable(cidv,va);cidv++;:}
-        |id:va division igual EXP pcoma {:gVariable(cidv,va);cidv++;:}
-        |id:va suma igual EXP pcoma {:gVariable(cidv,va);cidv++;:}
-        |id:va resta igual EXP pcoma    {:gVariable(cidv,va);cidv++;:}
-        |id:va modulo igual EXP pcoma   {:gVariable(cidv,va);cidv++;:}
-        |id:va suma suma    {:gVariable(cidv,va);cidv++;:}
-        |id:va suma suma pcoma  {:gVariable(cidv,va);cidv++;:}
-        |id:va resta resta  {:gVariable(cidv,va);cidv++;:}
-        |id:va resta resta pcoma   {:gVariable(cidv,va);cidv++;:};
+        |id:va multiplicacion igual EXP pcoma  
+        |id:va division igual EXP pcoma 
+        |id:va suma igual EXP pcoma
+        |id:va resta igual EXP pcoma
+        |id:va modulo igual EXP pcoma  
+        |id:va suma suma  
+        |id:va suma suma pcoma 
+        |id:va resta resta 
+        |id:va resta resta pcoma;
 
 TIPO::=var
         |let
@@ -141,8 +140,8 @@ TIPO::=var
 
 IMPORTAR::=TIPO id:va igual require parentesisa cadena parentesisc pcoma    {:gVariable(cidv,va);cidv++;:}
         |TIPO id:va igual require parentesisa cadena parentesisc {:gVariable(cidv,va);cidv++;:}
-        |id:va igual require parentesisa cadena parentesisc {:gVariable(cidv,va);cidv++;:}
-        |id:va igual require parentesisa cadena parentesisc pcoma   {:gVariable(cidv,va);cidv++;:};
+        |id:va igual require parentesisa cadena parentesisc 
+        |id:va igual require parentesisa cadena parentesisc pcoma;
 
 LLAMADA::=id parentesisa PARAMETROS2 pcoma
         |id parentesisa PARAMETROS2;
@@ -173,7 +172,7 @@ WHILE::=whilee parentesisa EXP parentesisc llavea LINEAS2 llavec;
 
 FOR::=forr parentesisa INICIALIZADOR pcoma EXP pcoma LINEA parentesisc llavea LINEAS2 llavec;
 INICIALIZADOR::=TIPO id:va igual EXP    {:gVariable(cidv,va);cidv++;:}
-                |id:va igual EXP    {:gVariable(cidv,va);cidv++;:};
+                |id:va igual EXP;
 
 ELIFS::=ELIFS ELIF
         |ELIF;
@@ -208,7 +207,7 @@ EXP::=EXP suma EXP
     |not EXP
     |decimal
     |cadena
-    |id:va {:gVariable(cidv,va);cidv++;:}
+    |id
     |caracter
     |truee
     |falsee;

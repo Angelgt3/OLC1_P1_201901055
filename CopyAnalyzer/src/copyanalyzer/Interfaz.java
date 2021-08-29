@@ -1,6 +1,11 @@
 package copyanalyzer;
 import Analizadores.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.*;
 import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Interfaz extends javax.swing.JFrame {
 
@@ -132,7 +137,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addContainerGap())
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,54 +165,125 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu2MouseClicked
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        System.out.println("*Se Ejecuta*");
-        
-        String texto=jTextArea2.getText();
-        /*
-        Analizadores.A1.parserA1 sintacticoA1;
-        sintacticoA1 = new Analizadores.A1.parserA1(new Analizadores.A1.LexicoA1(new StringReader(texto)));
+                                         
+            System.out.println("*Se Ejecuta*");
+            String text1,text2;
+            String texto=jTextArea2.getText();
+            copyanalyzer.ArchvioJS Archivo1=new  copyanalyzer.ArchvioJS();
+            copyanalyzer.ArchvioJS Archivo2=new  copyanalyzer.ArchvioJS();
+            Analizadores.A1.parserA1 sintacticoA1;
+            sintacticoA1 = new Analizadores.A1.parserA1(new Analizadores.A1.LexicoA1(new StringReader(texto)));
+            
+            try{
+                sintacticoA1.parse();
+            }
+            catch(Exception e){
+                System.out.println("Error al analizar el archivo de entrada ");
+                System.out.println("Debido a: "+e.getCause());
+            }
+            text1=Analizadores.A1.parserA1.rutas[0];
+            text2=Analizadores.A1.parserA1.rutas[1];
+            text1=text1.replace("\"", "");
+            text2=text2.replace("\"", "");
+            jTextArea1.setText("Ruta 1: "+Analizadores.A1.parserA1.rutas[0]+"\nRuta 2: "+Analizadores.A1.parserA1.rutas[1]);
+            String textoA1=leerfichero(text1);
+            String textoA2=leerfichero(text2);
+            
+            Analizadores.A2.parserA2 sintacticoA2A;
+            sintacticoA2A = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(textoA1)));
+            try{
+            sintacticoA2A.parse();
+            
+            LlenarArchivo(Archivo1);
+            
+            //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
+            jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo1.NClase+" Lineas: "+Archivo1.lineasclass);
+            jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo1.Metodos+" parametros: "+Archivo1.cant_parametros+" Lineas: "+Archivo1.lineasmetodo);
+            jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo1.variables); 
+            jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo1.Comentarios);
+            
+            }
+            catch(Exception e){
+            System.out.println("Error al analizar la entrada");
+            System.out.println("Debido a: "+e.getCause());
+            }
+            
+            Analizadores.A2.parserA2 sintacticoA2B;
+            sintacticoA2B = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(textoA2)));
+            try{  
+            sintacticoA2B.parse();
+            LlenarArchivo(Archivo2); 
+            
+            for(int i=0;i<Archivo1.Metodos.size();i++){
+                Archivo2.Metodos.remove(0);
+                Archivo2.cant_parametros.remove(0);
+                Archivo2.lineasmetodo.remove(0);
+            }            
+            for(int i=0;i<Archivo1.variables.size();i++){
+                Archivo2.variables.remove(0);
+            }
+            for(int i=0;i<Archivo1.Comentarios.size();i++){
+                Archivo2.Comentarios.remove(0);
+            }
+            
+            
+//jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
+            jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo2.NClase+" Lineas: "+Archivo2.lineasclass); 
+            jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo2.Metodos+" parametros: "+Archivo2.cant_parametros+" Lineas: "+Archivo2.lineasmetodo);
+            jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo2.variables); 
+            jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo2.Comentarios);
+            
+            }
+            catch(Exception e){
+            System.out.println("Error al analizar la entrada");
+            System.out.println("Debido a: "+e.getCause());
+            }
+            
+            jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
        
-        try{
-            sintacticoA1.parse();
-        */ 
-        
-        Analizadores.A2.parserA2 sintacticoA2;
-        sintacticoA2 = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(texto)));
-       
-        try{
-            sintacticoA2.parse();
-            jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase);
-        
+    }//GEN-LAST:event_jMenu4MouseClicked
+
+    public static void LlenarArchivo(copyanalyzer.ArchvioJS Archivo1){
+        Archivo1.setclass(Analizadores.A2.parserA2.idclase, Analizadores.A2.parserA2.lineasclase);
             for(int i=0;i<Analizadores.A2.parserA2.idmetodos.length;i++){
                 if (Analizadores.A2.parserA2.idmetodos[i] != null) {
-                    jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Analizadores.A2.parserA2.idmetodos[i]+" Parametros: "+Analizadores.A2.parserA2.cantparemetro[i]+" Lineas:"+Analizadores.A2.parserA2.lineasmetodo[i]);
+                    //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Analizadores.A2.parserA2.idmetodos[i]+" Parametros: "+Analizadores.A2.parserA2.cantparemetro[i]+" Lineas:"+Analizadores.A2.parserA2.lineasmetodo[i]);
+                    Archivo1.setmetodos(Analizadores.A2.parserA2.idmetodos[i], Analizadores.A2.parserA2.cantparemetro[i], Analizadores.A2.parserA2.lineasmetodo[i]);
                 }
                 else{break;}
             }
             for(int i=0;i<Analizadores.A2.parserA2.idvariables.length;i++){
                 if (Analizadores.A2.parserA2.idvariables[i] != null) {
-                    jTextArea1.setText(jTextArea1.getText()+"\n Variable: "+Analizadores.A2.parserA2.idvariables[i]);
+                    //jTextArea1.setText(jTextArea1.getText()+"\n Variable: "+Analizadores.A2.parserA2.idvariables[i]);
+                    Archivo1.setvariable(Analizadores.A2.parserA2.idvariables[i]);
                 }
                 else{break;}
             }
             for(int i=0;i<Analizadores.A2.parserA2.vcomentarios.length;i++){
                 if (Analizadores.A2.parserA2.vcomentarios[i] != null) {
-                    jTextArea1.setText(jTextArea1.getText()+"\n Comentario: "+Analizadores.A2.parserA2.vcomentarios[i]);
+                    //jTextArea1.setText(jTextArea1.getText()+"\n Comentario: "+Analizadores.A2.parserA2.vcomentarios[i]);
+                    Archivo1.setcomentario(Analizadores.A2.parserA2.vcomentarios[i]);
+                    
                 }
                 else{break;}
             }
-            jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
-           // jTextArea1.setText("1: "+Analizadores.parserA1.rutas[0]+"\n2: "+Analizadores.parserA1.rutas[1]);
-           // Anodo raiz=Analizadores.parserA1.
-            
-        }
-        catch(Exception e){
-            System.out.println("Error al analizar la entrada");
-            System.out.println("Debido a: "+e.getCause());
-        }
-        
-    }//GEN-LAST:event_jMenu4MouseClicked
-
+    }
+    
+    public static String leerfichero(String texto){
+        String textf="";
+        try{
+                BufferedReader bf1= new BufferedReader(new FileReader(texto));
+                String bfread;
+                while((bfread=bf1.readLine())!= null){
+                    textf=textf+"\n"+bfread;
+                }    
+            }
+            catch(Exception e){
+                System.out.println("Error al abrir el fichero no.1  :"+e);
+            }
+        return textf;
+    }
+    
     public static void main(String args[]) {
        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
