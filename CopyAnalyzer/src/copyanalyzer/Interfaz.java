@@ -238,11 +238,13 @@ public class Interfaz extends javax.swing.JFrame {
             System.out.println("Error al analizar la entrada");
             System.out.println("Debido a: "+e.getCause());
             }
-            
+            jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje general: "+pgeneral(Archivo1,Archivo2));
             jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
        
     }//GEN-LAST:event_jMenu4MouseClicked
 
+
+    
     public static void LlenarArchivo(copyanalyzer.ArchvioJS Archivo1){
         Archivo1.setclass(Analizadores.A2.parserA2.idclase, Analizadores.A2.parserA2.lineasclase);
             for(int i=0;i<Analizadores.A2.parserA2.idmetodos.length;i++){
@@ -282,6 +284,61 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println("Error al abrir el fichero no.1  :"+e);
             }
         return textf;
+    }
+    
+    public static double pgeneral(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
+        double resultado=0;
+        double clases_repetidas=0;
+        double variables_repetidas=0;
+        double comentarios_repetidos=0;
+        double metodos_repetidos=0;
+        if(ar1.NClase==ar2.NClase)
+            clases_repetidas+=2;
+        else if(ar1.lineasclass==ar2.lineasclass)
+            clases_repetidas+=2;
+        else if(ar1.Metodos.equals(ar2.Metodos))
+            clases_repetidas+=2;
+        clases_repetidas/=2;
+        resultado+=clases_repetidas*0.3;
+        //System.out.println(resultado);
+        for(int i=0;i<ar1.Metodos.size();i++){
+            for(int j=0;j<ar2.Metodos.size();j++){
+                if((ar1.Metodos.get(i).toString().equalsIgnoreCase(ar2.Metodos.get(j).toString()))&&(((ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())))||(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString())))){
+                    metodos_repetidos+=2;break;
+                }
+                else if((ar1.Metodos.get(i)!=ar2.Metodos.get(j))&&((ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())))&&(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString()))){
+                    metodos_repetidos+=1;break;
+                }
+            }
+        }
+        metodos_repetidos/=((ar1.Metodos.size())+(ar2.Metodos.size()));
+        resultado+=metodos_repetidos*0.3;
+        //System.out.println(resultado);
+         for(int i=0;i<ar1.variables.size();i++){
+            for(int j=0;j<ar2.variables.size();j++){
+                if(ar1.variables.get(i).toString().equalsIgnoreCase(ar2.variables.get(j).toString())){
+                    variables_repetidas+=2;
+                    break;
+                }
+            }
+        }
+        variables_repetidas/=((ar1.variables.size())+(ar2.variables.size()));
+        resultado+=variables_repetidas*0.2;
+        //System.out.println(resultado);
+        for(int i=0;i<ar1.Comentarios.size();i++){
+            for(int j=0;j<ar2.Comentarios.size();j++){
+                if(ar1.Comentarios.get(i).toString().equalsIgnoreCase(ar2.Comentarios.get(j).toString())){
+                    comentarios_repetidos+=2;
+                    break;
+                }
+            }
+        }
+        System.out.println(comentarios_repetidos);
+        System.out.println((ar1.Comentarios.size())+(ar2.Comentarios.size()));
+        comentarios_repetidos/=((ar1.Comentarios.size())+(ar2.Comentarios.size()));
+        resultado+=comentarios_repetidos*0.2;
+        //System.out.println(resultado);
+        return resultado;
     }
     
     public static void main(String args[]) {

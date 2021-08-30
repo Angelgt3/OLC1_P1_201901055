@@ -1,44 +1,45 @@
-//Autor: Erick Lemus
-class draws {
-    //Esta clase es un ejemplo de un archivo de entrada
+//Autor: Herlindo Corona
+
+class draws_generator {
+
     tringle_size = 3;
     square_size = 8;
 
-    set_size(tam) {
-        tringle_size = tam;
+    set_size(size) {
+        tringle_size = size;
     }
 
     draw_triangle() {
-        let triangle_draw = "";
+        let draw_triangle_draw = "";
         for (let draw_triangle_i = tringle_size; draw_triangle_i >= 1; draw_triangle_i--) {
-            var draw_triangle_j = 0;
+            let draw_triangle_j = 0;
             for (draw_triangle_j = 0; draw_triangle_j < draw_triangle_i; draw_triangle_j++) {
-                triangle_draw = triangle_draw + "*"
+                draw_triangle_draw = draw_triangle_draw + "*"
             }
-            triangle_draw = triangle_draw + "\n"
+            draw_triangle_draw = draw_triangle_draw + "\n"
         }
-        console.log(triangle_draw);
+        var x="prueba"; 
+        console.log(draw_triangle_draw);
     }
-    /*
-    Si este comentario se repite
-    cuenta como parte de la repitencia
-    */
-    draw_sq() {
-        let sq_draw = '';
+
+    draw_square() {
+        const a=5;
+        let draw_square_draw = '';
         if (square_size >= 2 && square_size <= 50) {
             for (let draw_square_i = 1; draw_square_i <= square_size; draw_square_i++) {
                 for (let draw_square_j = 1; draw_square_j <= square_size; draw_square_j++) {
-                    sq_draw = sq_draw + "*";
+                    draw_square_draw = draw_square_draw + "*";
                 }
-                sq_draw = sq_draw + "\n"
+                draw_square_draw = draw_square_draw + "\n"
             }
-            imprimir(sq_draw);
+            console.log(draw_square_draw);
         } else {
-            imprimir("Por favor ingrese un numero entre 2 y 50");
+            console.log("Por favor ingrese un numero entre 2 y 50");
         }
     }
-
-    imprimir(var1){
-        console.log(var1)
-    }
 }
+
+/*
+    Si este comentario se repite
+    cuenta como parte de la repitencia
+    */

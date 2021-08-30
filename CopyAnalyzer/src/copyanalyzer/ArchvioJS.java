@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ArchvioJS {
      public String NClase;
-     public ArrayList<String> Metodos = new ArrayList<String>();
+     List<String> Metodos = new ArrayList<String>();
      List<Integer> cant_parametros = new ArrayList<Integer>();
      public int lineasclass;
      List<String> variables = new ArrayList<String>();
