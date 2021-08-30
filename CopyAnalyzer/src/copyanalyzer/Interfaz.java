@@ -163,14 +163,17 @@ public class Interfaz extends javax.swing.JFrame {
         System.out.println("*Se crea pestaña*");
 
     }//GEN-LAST:event_jMenu2MouseClicked
-
+    public copyanalyzer.ArchvioJS Archivo1;
+    public copyanalyzer.ArchvioJS Archivo2;
+    public Pespecificos pelista=new Pespecificos();
+    public double pugeneral=0;
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
                                          
             System.out.println("*Se Ejecuta*");
             String text1,text2;
             String texto=jTextArea2.getText();
-            copyanalyzer.ArchvioJS Archivo1=new  copyanalyzer.ArchvioJS();
-            copyanalyzer.ArchvioJS Archivo2=new  copyanalyzer.ArchvioJS();
+            Archivo1=new  copyanalyzer.ArchvioJS();
+            Archivo2=new  copyanalyzer.ArchvioJS();
             Analizadores.A1.parserA1 sintacticoA1;
             sintacticoA1 = new Analizadores.A1.parserA1(new Analizadores.A1.LexicoA1(new StringReader(texto)));
             
@@ -185,7 +188,7 @@ public class Interfaz extends javax.swing.JFrame {
             text2=Analizadores.A1.parserA1.rutas[1];
             text1=text1.replace("\"", "");
             text2=text2.replace("\"", "");
-            jTextArea1.setText("Ruta 1: "+Analizadores.A1.parserA1.rutas[0]+"\nRuta 2: "+Analizadores.A1.parserA1.rutas[1]);
+            //jTextArea1.setText("Ruta 1: "+Analizadores.A1.parserA1.rutas[0]+"\nRuta 2: "+Analizadores.A1.parserA1.rutas[1]);
             String textoA1=leerfichero(text1);
             String textoA2=leerfichero(text2);
             
@@ -197,10 +200,10 @@ public class Interfaz extends javax.swing.JFrame {
             LlenarArchivo(Archivo1);
             
             //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
-            jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo1.NClase+" Lineas: "+Archivo1.lineasclass);
-            jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo1.Metodos+" parametros: "+Archivo1.cant_parametros+" Lineas: "+Archivo1.lineasmetodo);
-            jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo1.variables); 
-            jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo1.Comentarios);
+            //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo1.NClase+" Lineas: "+Archivo1.lineasclass);
+            //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo1.Metodos+" parametros: "+Archivo1.cant_parametros+" Lineas: "+Archivo1.lineasmetodo);
+            //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo1.variables); 
+            //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo1.Comentarios);
             
             }
             catch(Exception e){
@@ -228,24 +231,27 @@ public class Interfaz extends javax.swing.JFrame {
             
             
 //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
-            jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo2.NClase+" Lineas: "+Archivo2.lineasclass); 
-            jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo2.Metodos+" parametros: "+Archivo2.cant_parametros+" Lineas: "+Archivo2.lineasmetodo);
-            jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo2.variables); 
-            jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo2.Comentarios);
+            //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo2.NClase+" Lineas: "+Archivo2.lineasclass); 
+            //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo2.Metodos+" parametros: "+Archivo2.cant_parametros+" Lineas: "+Archivo2.lineasmetodo);
+            //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo2.variables); 
+            //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo2.Comentarios);
             
             }
             catch(Exception e){
             System.out.println("Error al analizar la entrada");
             System.out.println("Debido a: "+e.getCause());
             }
-            jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje general: "+pgeneral(Archivo1,Archivo2));
+            pugeneral=pgeneral(Archivo1,Archivo2);
+            //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje general: "+pgeneral(Archivo1,Archivo2));
+            //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje Especifico: ");
+            pespefico(Archivo1,Archivo2);
             jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
        
     }//GEN-LAST:event_jMenu4MouseClicked
 
 
     
-    public static void LlenarArchivo(copyanalyzer.ArchvioJS Archivo1){
+    public void LlenarArchivo(copyanalyzer.ArchvioJS Archivo1){
         Archivo1.setclass(Analizadores.A2.parserA2.idclase, Analizadores.A2.parserA2.lineasclase);
             for(int i=0;i<Analizadores.A2.parserA2.idmetodos.length;i++){
                 if (Analizadores.A2.parserA2.idmetodos[i] != null) {
@@ -286,13 +292,131 @@ public class Interfaz extends javax.swing.JFrame {
         return textf;
     }
     
+    public void pespefico(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
+        
+        double valor=0;
+        if(ar1.NClase.toString().equalsIgnoreCase(ar2.NClase.toString()))
+            valor+=0.2;
+        if(ar1.lineasclass==ar2.lineasclass)
+            valor+=0.4;
+        if(ar1.Metodos.equals(ar2.Metodos))
+            valor+=0.4;
+        //System.out.println("clase: "+valor);
+        pelista.insertar(valor,"clase",ar1.NClase);
+        pelista.insertar(valor,"clase",ar2.NClase);
+        valor=0;
+         //archivo 1 metodos
+        for(int i=0;i<ar1.Metodos.size();i++){
+            valor=0;
+            for(int j=0;j<ar2.Metodos.size();j++){
+                if(ar1.Metodos.get(i).toString().equalsIgnoreCase(ar2.Metodos.get(j).toString())){
+                    valor+=0.4;
+                    if(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString())){
+                        valor+=0.3;
+                    }
+                    if(ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())){
+                        valor+=0.3;
+                    }
+                    break;
+                }
+                else if(ar1.Metodos.get(i)!=ar2.Metodos.get(j) && ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())){
+                    valor+=0.3;
+                    if(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString())){
+                        valor+=0.3;
+                    }
+                    break;
+                }
+            }
+            //System.out.println("Metodo:" +ar1.Metodos.get(i)+" valor:"+valor);
+            pelista.insertar(valor,"metodo",ar1.Metodos.get(i));
+        }
+        //archivo 2 metodos
+        for(int i=0;i<ar2.Metodos.size();i++){
+            valor=0;
+            for(int j=0;j<ar1.Metodos.size();j++){
+                if(ar2.Metodos.get(i).toString().equalsIgnoreCase(ar1.Metodos.get(j).toString())){
+                    valor+=0.4;
+                    if(ar2.cant_parametros.get(i).toString().equalsIgnoreCase(ar1.cant_parametros.get(j).toString())){
+                        valor+=0.3;
+                    }
+                    if(ar2.lineasmetodo.get(i).toString().equalsIgnoreCase(ar1.lineasmetodo.get(j).toString())){
+                        valor+=0.3;
+                    }
+                    break;
+                }
+                else if(ar2.Metodos.get(i)!=ar1.Metodos.get(j) && ar2.lineasmetodo.get(i).toString().equalsIgnoreCase(ar1.lineasmetodo.get(j).toString())){
+                    valor+=0.3;
+                    if(ar2.cant_parametros.get(i).toString().equalsIgnoreCase(ar1.cant_parametros.get(j).toString())){
+                        valor+=0.3;
+                    }
+                    break;
+                }
+            }
+            //System.out.println("Metodo:" +ar2.Metodos.get(i)+" valor:"+valor);
+            pelista.insertar(valor,"metodo",ar2.Metodos.get(i));
+        }
+        //Variable archivo1
+        valor=0;
+        for(int i=0;i<ar1.variables.size();i++){
+            valor=0;
+            for(int j=0;j<ar2.variables.size();j++){
+                if(ar1.variables.get(i).toString().equalsIgnoreCase(ar2.variables.get(j).toString())){
+                    valor+=1;
+                    break;
+                }
+            }
+            //System.out.println("Variable :" +ar1.variables.get(i)+" valor:"+valor);
+            pelista.insertar(valor,"variable",ar1.variables.get(i));
+        }
+        //Variable archivo2
+        for(int i=0;i<ar2.variables.size();i++){
+            valor=0;
+            for(int j=0;j<ar1.variables.size();j++){
+                if(ar2.variables.get(i).toString().equalsIgnoreCase(ar1.variables.get(j).toString())){
+                    valor+=1;
+                    break;
+                }
+            }
+            //System.out.println("Variable :" +ar2.variables.get(i)+" valor:"+valor);
+            pelista.insertar(valor,"variable",ar2.variables.get(i));
+        }
+        //Comentario archivo1
+        valor=0;
+        for(int i=0;i<ar1.Comentarios.size();i++){
+            valor=0;
+            for(int j=0;j<ar2.Comentarios.size();j++){
+                if(ar1.Comentarios.get(i).toString().equalsIgnoreCase(ar2.Comentarios.get(j).toString())){
+                    valor+=1;
+                    break;
+                }
+            }
+            //System.out.println("Comentarios :" +ar1.Comentarios.get(i)+" valor:"+valor);
+            pelista.insertar(valor,"comentario",ar1.Comentarios.get(i));
+        }
+        //Comentario archivo2
+        for(int i=0;i<ar2.Comentarios.size();i++){
+            valor=0;
+            for(int j=0;j<ar1.Comentarios.size();j++){
+                if(ar2.Comentarios.get(i).toString().equalsIgnoreCase(ar1.Comentarios.get(j).toString())){
+                    valor+=1;
+                    break;
+                }
+            }
+            //System.out.println("Comentarios :" +ar2.Comentarios.get(i)+" valor:"+valor);
+            pelista.insertar(valor,"comentario",ar2.Comentarios.get(i));
+        }
+ 
+    }
+    
+    
     public static double pgeneral(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
         double resultado=0;
         double clases_repetidas=0;
         double variables_repetidas=0;
         double comentarios_repetidos=0;
         double metodos_repetidos=0;
-        if(ar1.NClase==ar2.NClase)
+        //pgeneral clases
+       if(ar1.NClase.toString().equalsIgnoreCase(ar2.NClase.toString()))
             clases_repetidas+=2;
         else if(ar1.lineasclass==ar2.lineasclass)
             clases_repetidas+=2;
@@ -301,6 +425,7 @@ public class Interfaz extends javax.swing.JFrame {
         clases_repetidas/=2;
         resultado+=clases_repetidas*0.3;
         //System.out.println(resultado);
+        //pgeneral metodos
         for(int i=0;i<ar1.Metodos.size();i++){
             for(int j=0;j<ar2.Metodos.size();j++){
                 if((ar1.Metodos.get(i).toString().equalsIgnoreCase(ar2.Metodos.get(j).toString()))&&(((ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())))||(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString())))){
@@ -314,6 +439,7 @@ public class Interfaz extends javax.swing.JFrame {
         metodos_repetidos/=((ar1.Metodos.size())+(ar2.Metodos.size()));
         resultado+=metodos_repetidos*0.3;
         //System.out.println(resultado);
+        //pgeneral variables
          for(int i=0;i<ar1.variables.size();i++){
             for(int j=0;j<ar2.variables.size();j++){
                 if(ar1.variables.get(i).toString().equalsIgnoreCase(ar2.variables.get(j).toString())){
@@ -325,6 +451,7 @@ public class Interfaz extends javax.swing.JFrame {
         variables_repetidas/=((ar1.variables.size())+(ar2.variables.size()));
         resultado+=variables_repetidas*0.2;
         //System.out.println(resultado);
+        //pgeneral comentarios
         for(int i=0;i<ar1.Comentarios.size();i++){
             for(int j=0;j<ar2.Comentarios.size();j++){
                 if(ar1.Comentarios.get(i).toString().equalsIgnoreCase(ar2.Comentarios.get(j).toString())){
@@ -333,8 +460,6 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
         }
-        System.out.println(comentarios_repetidos);
-        System.out.println((ar1.Comentarios.size())+(ar2.Comentarios.size()));
         comentarios_repetidos/=((ar1.Comentarios.size())+(ar2.Comentarios.size()));
         resultado+=comentarios_repetidos*0.2;
         //System.out.println(resultado);
