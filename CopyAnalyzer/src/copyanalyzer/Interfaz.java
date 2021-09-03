@@ -6,6 +6,13 @@ import java.io.*;
 import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.*;
+import org.jfree.chart.JFreeChart; 
+import org.jfree.chart.ChartFactory; 
+import org.jfree.chart.ChartUtilities; 
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYSeries;
 
 public class Interfaz extends javax.swing.JFrame {
 
@@ -166,6 +173,7 @@ public class Interfaz extends javax.swing.JFrame {
     public copyanalyzer.ArchvioJS Archivo1;
     public copyanalyzer.ArchvioJS Archivo2;
     public Pespecificos pelista=new Pespecificos();
+    public Operaciones ope=new Operaciones();
     public double pugeneral=0;
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
                                          
@@ -184,72 +192,178 @@ public class Interfaz extends javax.swing.JFrame {
                 System.out.println("Error al analizar el archivo de entrada ");
                 System.out.println("Debido a: "+e.getCause());
             }
-            text1=Analizadores.A1.parserA1.rutas[0];
-            text2=Analizadores.A1.parserA1.rutas[1];
-            text1=text1.replace("\"", "");
-            text2=text2.replace("\"", "");
-            //jTextArea1.setText("Ruta 1: "+Analizadores.A1.parserA1.rutas[0]+"\nRuta 2: "+Analizadores.A1.parserA1.rutas[1]);
-            String textoA1=leerfichero(text1);
-            String textoA2=leerfichero(text2);
-            
-            Analizadores.A2.parserA2 sintacticoA2A;
-            sintacticoA2A = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(textoA1)));
             try{
-            sintacticoA2A.parse();
-            
-            LlenarArchivo(Archivo1);
-            
-            //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
-            //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo1.NClase+" Lineas: "+Archivo1.lineasclass);
-            //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo1.Metodos+" parametros: "+Archivo1.cant_parametros+" Lineas: "+Archivo1.lineasmetodo);
-            //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo1.variables); 
-            //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo1.Comentarios);
-            
+                text1=Analizadores.A1.parserA1.rutas[0];
+                text2=Analizadores.A1.parserA1.rutas[1];
+                text1=text1.replace("\"", "");
+                text2=text2.replace("\"", "");
+                //jTextArea1.setText("Ruta 1: "+Analizadores.A1.parserA1.rutas[0]+"\nRuta 2: "+Analizadores.A1.parserA1.rutas[1]);
+                String textoA1=leerfichero(text1);
+                String textoA2=leerfichero(text2);
+
+                Analizadores.A2.parserA2 sintacticoA2A;
+                sintacticoA2A = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(textoA1)));
+                try{
+                sintacticoA2A.parse();
+
+                LlenarArchivo(Archivo1);
+
+                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
+                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo1.NClase+" Lineas: "+Archivo1.lineasclass);
+                //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo1.Metodos+" parametros: "+Archivo1.cant_parametros+" Lineas: "+Archivo1.lineasmetodo);
+                //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo1.variables); 
+                //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo1.Comentarios);
+
+                }
+                catch(Exception e){
+                System.out.println("Error al analizar la entrada");
+                System.out.println("Debido a: "+e.getCause());
+                }
+
+                Analizadores.A2.parserA2 sintacticoA2B;
+                sintacticoA2B = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(textoA2)));
+                try{  
+                sintacticoA2B.parse();
+                LlenarArchivo(Archivo2); 
+
+                for(int i=0;i<Archivo1.Metodos.size();i++){
+                    Archivo2.Metodos.remove(0);
+                    Archivo2.cant_parametros.remove(0);
+                    Archivo2.lineasmetodo.remove(0);
+                }            
+                for(int i=0;i<Archivo1.variables.size();i++){
+                    Archivo2.variables.remove(0);
+                }
+                for(int i=0;i<Archivo1.Comentarios.size();i++){
+                    Archivo2.Comentarios.remove(0);
+                }
+
+
+                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
+                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo2.NClase+" Lineas: "+Archivo2.lineasclass); 
+                //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo2.Metodos+" parametros: "+Archivo2.cant_parametros+" Lineas: "+Archivo2.lineasmetodo);
+                //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo2.variables); 
+                //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo2.Comentarios);
+
+                }
+                catch(Exception e){
+                System.out.println("Error al analizar la entrada");
+                System.out.println("Debido a: "+e.getCause());
+                }
+                pugeneral=pgeneral(Archivo1,Archivo2);
+                //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje general: "+pgeneral(Archivo1,Archivo2));
+                //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje Especifico: ");
+                pespefico(Archivo1,Archivo2);
+                /*
+                pelista.recorrer();
+                pelista.buscar("archivo1.js","clase","draws");
+                pelista.buscar("archivo1.js","metodo","imprimir");
+                pelista.buscar("archivo2.js","variable","draw_square_draw");
+                */
+                llenar1();
+                
+                jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
             }
             catch(Exception e){
-            System.out.println("Error al analizar la entrada");
-            System.out.println("Debido a: "+e.getCause());
+                System.out.println("Error"+e);
             }
-            
-            Analizadores.A2.parserA2 sintacticoA2B;
-            sintacticoA2B = new Analizadores.A2.parserA2(new Analizadores.A2.LexicoA2(new StringReader(textoA2)));
-            try{  
-            sintacticoA2B.parse();
-            LlenarArchivo(Archivo2); 
-            
-            for(int i=0;i<Archivo1.Metodos.size();i++){
-                Archivo2.Metodos.remove(0);
-                Archivo2.cant_parametros.remove(0);
-                Archivo2.lineasmetodo.remove(0);
-            }            
-            for(int i=0;i<Archivo1.variables.size();i++){
-                Archivo2.variables.remove(0);
-            }
-            for(int i=0;i<Archivo1.Comentarios.size();i++){
-                Archivo2.Comentarios.remove(0);
-            }
-            
-            
-//jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
-            //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo2.NClase+" Lineas: "+Archivo2.lineasclass); 
-            //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo2.Metodos+" parametros: "+Archivo2.cant_parametros+" Lineas: "+Archivo2.lineasmetodo);
-            //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo2.variables); 
-            //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo2.Comentarios);
-            
-            }
-            catch(Exception e){
-            System.out.println("Error al analizar la entrada");
-            System.out.println("Debido a: "+e.getCause());
-            }
-            pugeneral=pgeneral(Archivo1,Archivo2);
-            //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje general: "+pgeneral(Archivo1,Archivo2));
-            //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje Especifico: ");
-            pespefico(Archivo1,Archivo2);
-            jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
-       
+            //hacer(Analizadores.A1.parserA1.Raiz);
+           
     }//GEN-LAST:event_jMenu4MouseClicked
+    public void llenar1(){
+        for (int i=0;i<Analizadores.A1.parserA1.id.length;i++){
+            if(Analizadores.A1.parserA1.id[i]!=null){
+                String tex1=Analizadores.A1.parserA1.tipo[i];
+                String text2=Analizadores.A1.parserA1.id[i];
+                String text3=Analizadores.A1.parserA1.valor[i];
+                String t1=tex1.replace("\"", "");
+                String t2=text2.replace("\"", "");
+                String t3=text3.replace("\"", "");
+                ope.insertar(t1,t2,t3);
+            }
+            else{break;}
+        }
+        
+        for(int i=0;i<Analizadores.A1.parserA1.bid2.length;i++){
+            if(Analizadores.A1.parserA1.bid2[i]!=null){
+                String text1=Analizadores.A1.parserA1.archivo[i];
+                String text2=Analizadores.A1.parserA1.tipo2[i];
+                String text3=Analizadores.A1.parserA1.bid2[i];
+                String t1=text1.replace("\"", "");
+                String t2=text2.replace("\"", "");
+                String t3=text3.replace("\"", "");
+                double a= pelista.buscar(t1,t2 ,t3 );
+                ope.insertar(t2, t3,String.valueOf(a));
+            }
+            else{break;}
+        }
+        for(int i=0;i<Analizadores.A1.parserA1.larchivo.length;i++){
+            if(Analizadores.A1.parserA1.larchivo[i]!=null){
+                System.out.println("archivo; "+Analizadores.A1.parserA1.larchivo[i]);
+                System.out.println("titulo; "+Analizadores.A1.parserA1.ltitulo[i]);
+                String valor=ope.recorrer_buscar(Analizadores.A1.parserA1.larchivo[i]);
+                String valor2=ope.recorrer_buscar(Analizadores.A1.parserA1.ltitulo[i]);
+                if(valor!="" &&valor2==""){
+                    grafica_lineas(valor,Analizadores.A1.parserA1.ltitulo[i]);
+                }
+                else if(valor=="" &&valor2!=""){
+                    grafica_lineas(Analizadores.A1.parserA1.larchivo[i],valor2);
+                }
+                else{
+                    grafica_lineas(Analizadores.A1.parserA1.larchivo[i],Analizadores.A1.parserA1.ltitulo[i]);
+                }
+            }else{break;}
+        }
+        
+        
+        //ope.recorrer();
+    }
+    
+    public void grafica_lineas(String archivo, String titulo){
+        DefaultCategoryDataset line_chart_dataset = new DefaultCategoryDataset();
+        String ta=archivo.replace("\"","");
 
-
+        if(ta.equalsIgnoreCase("archivo1.js")){
+            System.out.println("entro");
+            line_chart_dataset.addValue( Archivo1.variables.size() , archivo , "Variables" );
+            line_chart_dataset.addValue( Archivo1.Metodos.size() , archivo , "Funciones" );
+            line_chart_dataset.addValue( 1 , archivo , "Clases" );
+            line_chart_dataset.addValue( Archivo1.Comentarios.size() , archivo , "Comentario" );
+        }
+        else if(ta.equalsIgnoreCase("archivo2.js")){
+            line_chart_dataset.addValue( Archivo2.variables.size() , archivo , "Variables" );
+            line_chart_dataset.addValue( Archivo2.Metodos.size() , archivo , "Funciones" );
+            line_chart_dataset.addValue( 1 , archivo , "Clases" );
+            line_chart_dataset.addValue( Archivo2.Comentarios.size() , archivo , "Comentario" );
+        }
+        JFreeChart lineChartObject = ChartFactory.createLineChart(
+         titulo,"",
+         "",
+         line_chart_dataset,PlotOrientation.VERTICAL,
+         true,true,false);
+   
+      int width = 640;    /* Width of the image */
+      int height = 480;   /* Height of the image */ 
+      File lineChart = new File( "graficalineas_"+ta+".jpeg" ); 
+        try {
+            ChartUtilities.saveChartAsJPEG(lineChart, lineChartObject, width, height);
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     public void hacer(NodoA raiz){
+        
+        if (raiz.hizq != null) {
+            hacer(raiz.hizq);
+        }
+        if (raiz.hder != null) {
+            hacer(raiz.hder);
+        }
+        if (raiz.hizq == null && raiz.hder == null) {
+            System.out.println("hola");
+        }
+    }
     
     public void LlenarArchivo(copyanalyzer.ArchvioJS Archivo1){
         Archivo1.setclass(Analizadores.A2.parserA2.idclase, Analizadores.A2.parserA2.lineasclase);
@@ -302,8 +416,8 @@ public class Interfaz extends javax.swing.JFrame {
         if(ar1.Metodos.equals(ar2.Metodos))
             valor+=0.4;
         //System.out.println("clase: "+valor);
-        pelista.insertar(valor,"clase",ar1.NClase);
-        pelista.insertar(valor,"clase",ar2.NClase);
+        pelista.insertar(valor,"clase",ar1.NClase,"archivo1.js");
+        pelista.insertar(valor,"clase",ar2.NClase,"archivo2.js");
         valor=0;
          //archivo 1 metodos
         for(int i=0;i<ar1.Metodos.size();i++){
@@ -328,7 +442,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
             //System.out.println("Metodo:" +ar1.Metodos.get(i)+" valor:"+valor);
-            pelista.insertar(valor,"metodo",ar1.Metodos.get(i));
+            pelista.insertar(valor,"metodo",ar1.Metodos.get(i),"archivo1.js");
         }
         //archivo 2 metodos
         for(int i=0;i<ar2.Metodos.size();i++){
@@ -353,7 +467,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
             //System.out.println("Metodo:" +ar2.Metodos.get(i)+" valor:"+valor);
-            pelista.insertar(valor,"metodo",ar2.Metodos.get(i));
+            pelista.insertar(valor,"metodo",ar2.Metodos.get(i),"archivo2.js");
         }
         //Variable archivo1
         valor=0;
@@ -366,7 +480,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
             //System.out.println("Variable :" +ar1.variables.get(i)+" valor:"+valor);
-            pelista.insertar(valor,"variable",ar1.variables.get(i));
+            pelista.insertar(valor,"variable",ar1.variables.get(i),"archivo1.js");
         }
         //Variable archivo2
         for(int i=0;i<ar2.variables.size();i++){
@@ -378,7 +492,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
             //System.out.println("Variable :" +ar2.variables.get(i)+" valor:"+valor);
-            pelista.insertar(valor,"variable",ar2.variables.get(i));
+            pelista.insertar(valor,"variable",ar2.variables.get(i),"archivo2.js");
         }
         //Comentario archivo1
         valor=0;
@@ -391,7 +505,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
             //System.out.println("Comentarios :" +ar1.Comentarios.get(i)+" valor:"+valor);
-            pelista.insertar(valor,"comentario",ar1.Comentarios.get(i));
+            pelista.insertar(valor,"comentario",ar1.Comentarios.get(i),"archivo1.js");
         }
         //Comentario archivo2
         for(int i=0;i<ar2.Comentarios.size();i++){
@@ -403,7 +517,7 @@ public class Interfaz extends javax.swing.JFrame {
                 }
             }
             //System.out.println("Comentarios :" +ar2.Comentarios.get(i)+" valor:"+valor);
-            pelista.insertar(valor,"comentario",ar2.Comentarios.get(i));
+            pelista.insertar(valor,"comentario",ar2.Comentarios.get(i),"archivo2.js");
         }
  
     }

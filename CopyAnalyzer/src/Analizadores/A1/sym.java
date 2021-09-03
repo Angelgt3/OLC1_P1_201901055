@@ -20,7 +20,6 @@ public class sym {
   public static final int titulox = 28;
   public static final int graficabarras = 5;
   public static final int corchetec = 19;
-  public static final int puntajeespecífico = 8;
   public static final int titulo = 11;
   public static final int corchetea = 18;
   public static final int ejex = 13;
@@ -41,6 +40,8 @@ public class sym {
   public static final int llavea = 14;
   public static final int generarreporteestadistico = 2;
   public static final int compare = 4;
+  public static final int Puntajegeneral = 33;
+  public static final int puntajeespecifico = 8;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -50,7 +51,7 @@ public class sym {
   "graficabarras",
   "graficapie",
   "graficalineas",
-  "puntajeespecífico",
+  "puntajeespecifico",
   "sstring",
   "ddouble",
   "titulo",
@@ -74,7 +75,8 @@ public class sym {
   "tituloy",
   "archivo",
   "comentarioo",
-  "comentarioomu"
+  "comentarioomu",
+  "Puntajegeneral"
   };
 }
 

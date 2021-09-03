@@ -32,7 +32,8 @@ comentarioomu=("#""*"[^"*"]*"*""#")
 "graficabarras"                      {return new Symbol(sym.graficabarras,yyline,yychar,yytext());}
 "graficapie"                         {return new Symbol(sym.graficapie,yyline,yychar,yytext());}
 "graficalineas"                      {return new Symbol(sym.graficalineas,yyline,yychar,yytext());}
-"puntajeespecífico"                  {return new Symbol(sym.puntajeespecífico,yyline,yychar,yytext());}
+"puntajeespecifico"                  {return new Symbol(sym.puntajeespecifico,yyline,yychar,yytext());}
+"Puntajegeneral"                  {return new Symbol(sym.Puntajegeneral,yyline,yychar,yytext());}
 
 "string"                            {return new Symbol(sym.sstring,yyline,yychar,yytext());}
 "double"                            {return new Symbol(sym.ddouble,yyline,yychar,yytext());}
