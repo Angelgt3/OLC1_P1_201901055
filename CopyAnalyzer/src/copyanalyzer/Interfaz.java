@@ -435,41 +435,53 @@ public class Interfaz extends javax.swing.JFrame {
         }
         for(int i=0;i<Analizadores.A1.parserA1.larchivo.length;i++){
             if(Analizadores.A1.parserA1.larchivo[i]!=null){
-                
-                String valor=ope.recorrer_buscar(Analizadores.A1.parserA1.larchivo[i]);
-                String valor2=ope.recorrer_buscar(Analizadores.A1.parserA1.ltitulo[i]);
-               
-                if(!valor.equalsIgnoreCase("") &&!valor2.equalsIgnoreCase("")){
-                    grafica_lineas(valor,valor2);
+                try{
+                    String valor=ope.recorrer_buscar(Analizadores.A1.parserA1.larchivo[i]);
+                    String valor2=ope.recorrer_buscar(Analizadores.A1.parserA1.ltitulo[i]);
+
+                    if(!valor.equalsIgnoreCase("") &&!valor2.equalsIgnoreCase("")){
+                        grafica_lineas(valor,valor2);
+                    }
+                    else if(!valor.equalsIgnoreCase("") &&valor2.equalsIgnoreCase("")){
+                        grafica_lineas(valor,Analizadores.A1.parserA1.ltitulo[i]);
+                    }
+                    else if(valor.equalsIgnoreCase("") && !valor2.equalsIgnoreCase("")){
+                        grafica_lineas(Analizadores.A1.parserA1.larchivo[i],valor2);
+                    }
+                    else{
+                        grafica_lineas(Analizadores.A1.parserA1.larchivo[i],Analizadores.A1.parserA1.ltitulo[i]);
+                    }
                 }
-                else if(!valor.equalsIgnoreCase("") &&valor2.equalsIgnoreCase("")){
-                    grafica_lineas(valor,Analizadores.A1.parserA1.ltitulo[i]);
-                }
-                else if(valor.equalsIgnoreCase("") && !valor2.equalsIgnoreCase("")){
-                    grafica_lineas(Analizadores.A1.parserA1.larchivo[i],valor2);
-                }
-                else{
-                    grafica_lineas(Analizadores.A1.parserA1.larchivo[i],Analizadores.A1.parserA1.ltitulo[i]);
+                catch(Exception e){
+                    jTextArea1.setText(jTextArea1.getText()+"\nNo se pudo generar la grafica lineas");
                 }
             }else{break;}
         
         }
         
-        //grafica de pie
+        //grafica de barras  no funciona :c
+        /*
         for(int i=0;i<Analizadores.A1.parserA1.qgpie.length;i++){
             if(Analizadores.A1.parserA1.qgpie[i]!=null){
-                //System.out.println("Que es?; "+Analizadores.A1.parserA1.qgpie[i]);
-                
+                System.out.println("Que es?; "+Analizadores.A1.parserA1.qgpie[i]);
                 for (int j=0;j<Analizadores.A1.parserA1.vgpie[i].length;j++){
-                    if(Analizadores.A1.parserA1.vgpie[i][j]!=null){
-                           int a;
-                        //System.out.println("valor; "+Analizadores.A1.parserA1.vgpie[i][j]);
+                    if(Analizadores.A1.parserA1.vgpie[i][j]!=null ){
+                        System.out.println("valor; "+Analizadores.A1.parserA1.vgpie[i][j]);
+                        try{
+                            String valor=ope.recorrer_buscar(Analizadores.A1.parserA1.larchivo[i]);
+                            String valor2=ope.recorrer_buscar(Analizadores.A1.parserA1.ltitulo[i]);
+                        }
+                        catch(Exception e){
+                            jTextArea1.setText(jTextArea1.getText()+"\nNo se pudo generar la grafica de barras");
+                        }
                     }
                 }
+                
             }
-        }
         
-      
+        }
+        */
+        
     }
     
     public void grafica_lineas(String archivo, String titulo){
@@ -477,7 +489,6 @@ public class Interfaz extends javax.swing.JFrame {
         String ta=archivo.replace("\"","");
 
         if(ta.equalsIgnoreCase("archivo1.js")){
-            System.out.println("entro");
             line_chart_dataset.addValue( Archivo1.variables.size() , archivo , "Variables" );
             line_chart_dataset.addValue( Archivo1.Metodos.size() , archivo , "Funciones" );
             line_chart_dataset.addValue( 1 , archivo , "Clases" );
@@ -675,7 +686,7 @@ public class Interfaz extends javax.swing.JFrame {
  
     }
     
-    public double pgeneral(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
+        public double pgeneral(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
         double resultado=0;
         double clases_repetidas=0;
         double variables_repetidas=0;
@@ -694,7 +705,7 @@ public class Interfaz extends javax.swing.JFrame {
             clases_repetidas=0;
         clases_repetidas/=2;
         resultado+=clases_repetidas*0.3;
-        System.out.println(resultado);
+        //System.out.println(resultado);
         //pgeneral metodos
         if(ar1.Metodos.size()>=ar2.Metodos.size()){
             for(int i=0;i<ar1.Metodos.size();i++){
@@ -712,7 +723,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
  
         metodos_repetidos/=((ar1.Metodos.size())+(ar2.Metodos.size()));       
-        resultado+=metodos_repetidos*0.3;
+        //resultado+=metodos_repetidos*0.3;
         //pgeneral variables
         if(ar1.variables.size()>=ar2.variables.size()){
            for(int i=0;i<ar1.variables.size();i++){
@@ -730,7 +741,7 @@ public class Interfaz extends javax.swing.JFrame {
         }
         variables_repetidas/=((ar1.variables.size())+(ar2.variables.size()));
         resultado+=variables_repetidas*0.2;
-        System.out.println(resultado);
+        //System.out.println(resultado);
         //pgeneral comentarios
         if(ar1.Comentarios.size()>=ar2.Comentarios.size()){
             for(int i=0;i<ar1.Comentarios.size();i++){
@@ -749,16 +760,13 @@ public class Interfaz extends javax.swing.JFrame {
         
         comentarios_repetidos/=((ar1.Comentarios.size())+(ar2.Comentarios.size()));
         resultado+=comentarios_repetidos*0.2;
-        System.out.println(resultado);
+        //System.out.println(resultado);
         return resultado;
     }
     
     public static void main(String args[]) {
        
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+       
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

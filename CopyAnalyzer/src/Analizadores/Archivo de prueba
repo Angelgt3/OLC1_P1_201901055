@@ -54,9 +54,9 @@ GenerarReporteEstadistico{
 
     GraficaBarras {
         Titulo: titulobarrasreal;
-        EjeX: [ "triangle_draw", "draw_triangle_i", "sq_draw", "draw_square_i", "draw_square_j", "draw_triangle_j", "draw_triangle_draw", "draw_square_draw", "x", "a" ];
         Valores: [ pr1, pr2, pr3, pr4, pr5, pr6, pr9, pr12, pr15, pr16 ];
         TituloX: "Nombre de las variables";
+        EjeX: [ "triangle_draw", "draw_triangle_i", "sq_draw", "draw_square_i", "draw_square_j", "draw_triangle_j", "draw_triangle_draw", "draw_square_draw", "x", "a" ];
         TituloY: "Puntaje";
     }
 

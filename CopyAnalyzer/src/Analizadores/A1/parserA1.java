@@ -315,58 +315,57 @@ public class parserA1 extends java_cup.runtime.lr_parser {
 
 
 
-    public static NodoA Raiz;    
-    public static String rutas[]=new String[2]; 
-    public static String tipo[]=new String[100];
-    public static String id[]=new String[100];
-    public static String valor[]=new String[100];
-    public static String archivo[]=new String[100];
-    public static String tipo2[]=new String[100];
-    public static String bid2[]=new String[100];
-    public static String id2[]=new String[100];
-    public static int cont=0;
-    public static int cont2=0;
+        public static NodoA Raiz;    
+        public static String rutas[]=new String[2]; 
+        public static String tipo[]=new String[100];
+        public static String id[]=new String[100];
+        public static String valor[]=new String[100];
+        public static String archivo[]=new String[100];
+        public static String tipo2[]=new String[100];
+        public static String bid2[]=new String[100];
+        public static String id2[]=new String[100];
+        public static int cont=0;
+        public static int cont2=0;
 
-    public static void guardar(int c,String vtipo, String idd, String valorr){
-        tipo[c]=vtipo;
-        id[c]=idd;
-        valor[c]=valorr;
-    }
-    public static void gpes(int c2,String archivoo, String vtipo, String bid,String idd){
-        archivo[c2]=archivoo;
-        tipo2[c2]=vtipo;
-        bid2[c2]=bid;
-        id2[c2]=idd;
-    }
-    
-    public static String ltitulo[]=new String[100];
-    public static int cont3=0;
-    public static boolean vard[]=new boolean[100];
-    public static void glti(int c3,String tituloo){
-        ltitulo[c3]=tituloo;
-    }
-    public static int cont4=0;
-    public static String larchivo[]=new String[100];
-    public static void glar(int c4,String archivoo){
-        larchivo[c4]=archivoo;
-    }
-    public static int cont51=0;
-    public static int cont52=0;
-    public static String[][] vgpie=new String[40][40];
-    public static String[] qgpie=new String[40];
+        public static void guardar(int c,String vtipo, String idd, String valorr){
+                tipo[c]=vtipo;
+                id[c]=idd;
+                valor[c]=valorr;
+        }
+        public static void gpes(int c2,String archivoo, String vtipo, String bid,String idd){
+                archivo[c2]=archivoo;
+                tipo2[c2]=vtipo;
+                bid2[c2]=bid;
+                id2[c2]=idd;
+        }
+        
+        public static String ltitulo[]=new String[100];
+        public static int cont3=0;
+        public static boolean vard[]=new boolean[100];
+        public static void glti(int c3,String tituloo){
+                ltitulo[c3]=tituloo;
+        }
+        public static int cont4=0;
+        public static String larchivo[]=new String[100];
+        public static void glar(int c4,String archivoo){
+                larchivo[c4]=archivoo;
+        }
+        public static int cont51=0,cont52=0;
+        public static String[][] vgpie=new String[40][40];
+        public static String[] qgpie=new String[40];
+        public static String[] temp=new String[40];
+        public static String[] temp2=new String[40];
 
+        public void syntax_error(Symbol s){ 
+                System.out.println("Error Sintáctico en la Línea " + (s.left) +
+                " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+        } 
 
-
-    public void syntax_error(Symbol s){ 
-        System.out.println("Error Sintáctico en la Línea " + (s.left) +
-        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
-    } 
-
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
-        System.out.println("Error síntactico irrecuperable en la Línea " + 
-        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
-        " no reconocido."); 
-    }  
+        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+                System.out.println("Error síntactico irrecuperable en la Línea " + 
+                (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+                " no reconocido."); 
+        }  
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
@@ -768,7 +767,7 @@ class CUP$parserA1$actions {
 		int valeft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).left;
 		int varight = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).right;
 		String va = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).value;
-		cont52=0;qgpie[cont51]="titulo"; vgpie[cont51][cont52]=va; cont51++;cont52=0;
+		qgpie[cont51]="titulo"; vgpie[cont51][cont52]=va; cont51++;cont52=0;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("CONTENIDOB",9, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-4)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -777,7 +776,7 @@ class CUP$parserA1$actions {
           case 37: // CONTENIDOB ::= ejex dpuntos corchetea REPE corchetec pcoma CONTENIDOB 
             {
               String RESULT =null;
-		qgpie[cont51]="ejex";cont51++;cont52=0;
+
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("CONTENIDOB",9, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-6)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -786,7 +785,7 @@ class CUP$parserA1$actions {
           case 38: // CONTENIDOB ::= valores dpuntos corchetea REPE2 corchetec pcoma CONTENIDOB 
             {
               String RESULT =null;
-		qgpie[cont51]="valores";cont51++;cont52=0;
+
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("CONTENIDOB",9, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-6)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -798,7 +797,7 @@ class CUP$parserA1$actions {
 		int valeft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).left;
 		int varight = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).right;
 		String va = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).value;
-		cont52=0;qgpie[cont51]="titulox"; vgpie[cont51][cont52]=va; cont51++;cont52=0;
+		qgpie[cont51]="titulox"; vgpie[cont51][cont52]=va; cont51++;cont52=0;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("CONTENIDOB",9, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-4)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -810,7 +809,7 @@ class CUP$parserA1$actions {
 		int valeft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).left;
 		int varight = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).right;
 		String va = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).value;
-		cont52=0;qgpie[cont51]="tituloy"; vgpie[cont51][cont52]=va; cont51++;cont52=0;
+		qgpie[cont51]="tituloy"; vgpie[cont51][cont52]=va; cont51++;cont52=0;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("CONTENIDOB",9, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-4)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -840,7 +839,7 @@ class CUP$parserA1$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).value;
-		vgpie[cont51][cont52]=a;cont52++;
+		temp[cont52]=a; cont52++;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("REPE",19, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -852,7 +851,7 @@ class CUP$parserA1$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.peek()).value;
-		vgpie[cont51][cont52]=a;cont52++;
+		qgpie[cont51]="ejex";temp[cont52]=a;vgpie[cont51]=temp;cont52=0;cont51++;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("REPE",19, ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -864,7 +863,7 @@ class CUP$parserA1$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)).value;
-		vgpie[cont51][cont52]=a;cont52++;
+		temp2[cont52]=a; cont52++;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("REPE2",18, ((java_cup.runtime.Symbol)CUP$parserA1$stack.elementAt(CUP$parserA1$top-2)), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
@@ -876,7 +875,7 @@ class CUP$parserA1$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$parserA1$stack.peek()).value;
-		vgpie[cont51][cont52]=a;cont52++;
+		qgpie[cont51]="valores";temp2[cont52]=a;vgpie[cont51]=temp2;cont52=0;cont51++;
               CUP$parserA1$result = parser.getSymbolFactory().newSymbol("REPE2",18, ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), ((java_cup.runtime.Symbol)CUP$parserA1$stack.peek()), RESULT);
             }
           return CUP$parserA1$result;
