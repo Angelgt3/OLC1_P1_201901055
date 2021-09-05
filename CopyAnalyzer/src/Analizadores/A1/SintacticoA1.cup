@@ -27,6 +27,7 @@ parser code{:
         bid2[c2]=bid;
         id2[c2]=idd;
     }
+    
     public static String ltitulo[]=new String[100];
     public static int cont3=0;
     public static boolean vard[]=new boolean[100];
@@ -38,6 +39,12 @@ parser code{:
     public static void glar(int c4,String archivoo){
         larchivo[c4]=archivoo;
     }
+    public static int cont51=0;
+    public static int cont52=0;
+    public static String[][] vgpie=new String[40][40];
+    public static String[] qgpie=new String[40];
+
+
 
     public void syntax_error(Symbol s){ 
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
@@ -52,9 +59,9 @@ parser code{:
 :}
 
 terminal String generarreporteestadistico,definirglobales,compare,graficabarras,graficapie,graficalineas,puntajeespecifico,sstring,ddouble,titulo,valores,ejex,llavea,llavec,parentesisa,parentesisc,corchetea,corchetec,coma,pcoma,igual,dolar,cadena,decimal,variable,dpuntos,titulox,tituloy,archivo,comentarioo,comentarioomu,Puntajegeneral;
-non terminal String INICIO, FUERA,ESTADISTICO,LINEAS,CONTENIDOL,PIE,CONTENIDOB,CUERPO2,BARRAS,INSTRUCCIONES,GLOBALES,CUERPO,COMPARAR,COMENTARIO;
+non terminal String INICIO, FUERA,CONTENIDOP,VAODE,VAOCA,ESTADISTICO,LINEAS,CONTENIDOL,PIE,CONTENIDOB,CUERPO2,BARRAS,INSTRUCCIONES,GLOBALES,CUERPO,COMPARAR,COMENTARIO;
 non terminal String PUNTAJE;
-non terminal String VAODE,REPE2,VAOCA,REPE,CONTENIDOP;
+non terminal String REPE2,REPE;
 start with INICIO;
 
 INICIO::= ESTADISTICO;
@@ -93,30 +100,30 @@ CONTENIDOL::=titulo dpuntos VAOCA:b pcoma CONTENIDOL  {:glti(cont3,b);cont3++;:}
             |llavec;
 
 PIE::= graficapie llavea CONTENIDOP;    
-CONTENIDOP::=titulo dpuntos VAOCA pcoma CONTENIDOP
+CONTENIDOP::=titulo dpuntos VAOCA:b pcoma CONTENIDOP 
             |ejex dpuntos corchetea REPE corchetec pcoma CONTENIDOP
             |valores dpuntos corchetea REPE2 corchetec pcoma CONTENIDOP
             |COMENTARIO CONTENIDOP
             |llavec;
 
 BARRAS::= graficabarras llavea CONTENIDOB;
-CONTENIDOB::= titulo dpuntos VAOCA pcoma CONTENIDOB
-            |ejex dpuntos corchetea REPE corchetec pcoma CONTENIDOB
-            |valores dpuntos corchetea REPE2 corchetec pcoma CONTENIDOB
-            |titulox dpuntos VAOCA pcoma CONTENIDOB
-            |tituloy dpuntos VAOCA pcoma CONTENIDOB
+CONTENIDOB::= titulo dpuntos VAOCA:va pcoma CONTENIDOB {:cont52=0;qgpie[cont51]="titulo"; vgpie[cont51][cont52]=va; cont51++;cont52=0;:}
+            |ejex dpuntos corchetea REPE corchetec pcoma CONTENIDOB {:qgpie[cont51]="ejex";cont52=0;:}
+            |valores dpuntos corchetea REPE2 corchetec pcoma CONTENIDOB {:qgpie[cont51]="valores";cont52=0;:}
+            |titulox dpuntos VAOCA:va pcoma CONTENIDOB       {:cont52=0;qgpie[cont51]="titulox"; vgpie[cont51][cont52]=va; cont51++;cont52=0;:}
+            |tituloy dpuntos VAOCA:va pcoma CONTENIDOB       {:cont52=0;qgpie[cont51]="tituloy"; vgpie[cont51][cont52]=va; cont51++;cont52=0;:}
             |COMENTARIO CONTENIDOB
             |llavec;
 
-REPE::= VAOCA:a coma REPE:b   {:RESULT=a;:}  
-        |VAOCA:a {:RESULT=a;:};
-REPE2::=VAODE:a coma REPE2:b  
-        |VAODE:a;
+REPE::= VAOCA:a coma REPE  {:vgpie[cont51][cont52]=a;cont52++;:}  
+        |VAOCA:a {:vgpie[cont51][cont52]=a;cont52++;cont51++;:};
+REPE2::=VAODE:a coma REPE2  {:vgpie[cont51][cont52]=a;cont52++;:} 
+        |VAODE:a        {:vgpie[cont51][cont52]=a;cont52++;cont51++;:} ;
 VAOCA::= variable:p     {:RESULT=p;:}
         |cadena:p       {:RESULT=p;:};      
-VAODE::=decimal:p   
-        |variable:p
-        |PUNTAJE:p;
+VAODE::=decimal:p       {:RESULT=p;:}  
+        |variable:p     {:RESULT=p;:}
+        |PUNTAJE:p      {:RESULT=p;:};
 
 PUNTAJE::= dolar llavea puntajeespecifico coma cadena coma cadena coma cadena llavec {:RESULT="pe";:}
         | dolar llavea Puntajegeneral llavec    {:RESULT="pe";:};

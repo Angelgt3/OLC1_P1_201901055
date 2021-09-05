@@ -1,18 +1,18 @@
 package copyanalyzer;
 import Analizadores.*;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.*;
 import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jfree.*;
 import org.jfree.chart.JFreeChart; 
 import org.jfree.chart.ChartFactory; 
 import org.jfree.chart.ChartUtilities; 
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYSeries;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Interfaz extends javax.swing.JFrame {
 
@@ -119,12 +119,32 @@ public class Interfaz extends javax.swing.JFrame {
         jMenu5.add(jMenuItem4);
 
         jMenuItem5.setText("Estadístico");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem5);
 
         jMenuItem6.setText("Tokens");
+        jMenuItem6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem6MouseClicked(evt);
+            }
+        });
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem6);
 
         jMenuItem7.setText("JSON");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem7);
 
         jMenuBar1.add(jMenu5);
@@ -208,12 +228,6 @@ public class Interfaz extends javax.swing.JFrame {
 
                 LlenarArchivo(Archivo1);
 
-                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
-                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo1.NClase+" Lineas: "+Archivo1.lineasclass);
-                //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo1.Metodos+" parametros: "+Archivo1.cant_parametros+" Lineas: "+Archivo1.lineasmetodo);
-                //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo1.variables); 
-                //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo1.Comentarios);
-
                 }
                 catch(Exception e){
                 System.out.println("Error al analizar la entrada");
@@ -238,28 +252,16 @@ public class Interfaz extends javax.swing.JFrame {
                     Archivo2.Comentarios.remove(0);
                 }
 
-
-                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Analizadores.A2.parserA2.idclase+" Lineas:"+Analizadores.A2.parserA2.lineasclase); 
-                //jTextArea1.setText(jTextArea1.getText()+"\n Clase: "+Archivo2.NClase+" Lineas: "+Archivo2.lineasclass); 
-                //jTextArea1.setText(jTextArea1.getText()+"\n Metodo: "+Archivo2.Metodos+" parametros: "+Archivo2.cant_parametros+" Lineas: "+Archivo2.lineasmetodo);
-                //jTextArea1.setText(jTextArea1.getText()+"\n Variables: "+Archivo2.variables); 
-                //jTextArea1.setText(jTextArea1.getText()+"\n Comentarios: "+Archivo2.Comentarios);
-
                 }
                 catch(Exception e){
                 System.out.println("Error al analizar la entrada");
                 System.out.println("Debido a: "+e.getCause());
                 }
-                pugeneral=pgeneral(Archivo1,Archivo2);
-                //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje general: "+pgeneral(Archivo1,Archivo2));
-                //jTextArea1.setText(jTextArea1.getText()+"\nPuntuaje Especifico: ");
                 pespefico(Archivo1,Archivo2);
-                /*
-                pelista.recorrer();
-                pelista.buscar("archivo1.js","clase","draws");
-                pelista.buscar("archivo1.js","metodo","imprimir");
-                pelista.buscar("archivo2.js","variable","draw_square_draw");
-                */
+                pugeneral=pgeneral(Archivo1,Archivo2);
+              
+                
+               
                 llenar1();
                 
                 jTextArea1.setText(jTextArea1.getText()+"\nFinalizo el analisis");
@@ -270,6 +272,140 @@ public class Interfaz extends javax.swing.JFrame {
             //hacer(Analizadores.A1.parserA1.Raiz);
            
     }//GEN-LAST:event_jMenu4MouseClicked
+
+    private void jMenuItem6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem6MouseClicked
+        
+    }//GEN-LAST:event_jMenuItem6MouseClicked
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        jTextArea1.setText(jTextArea1.getText()+"\ngenerando reporte token");
+        reporte_token();
+        jTextArea1.setText(jTextArea1.getText()+"\nreporte token generado");
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+       jTextArea1.setText(jTextArea1.getText()+"\ngenerando reporte JSON");
+        reporte_json();
+       jTextArea1.setText(jTextArea1.getText()+"\nreporte JSON generado");
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        jTextArea1.setText(jTextArea1.getText()+"\ngenerando reporte estadistico");
+        reporte_estadistico();
+       jTextArea1.setText(jTextArea1.getText()+"\nreporte estadistico generado");
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    public void reporte_estadistico(){
+        try {
+            FileWriter  archivo = new FileWriter("reporte_estadistico.html");
+            String mensaje="<html>"
+                    + "<head><title>REPORTE ESTADISTICO</title></head>\n" +
+"            <body>\n" +
+"                <h1>RESUMEN</h1>\n" +
+"                <TABLE BORDER>\n" +
+"                    <TR>\n" +
+"                        <TH>Tipo</TH><TH>Archivo1</TH><TH>Archivo2</TH><TH>Total</TH>\n" +
+"                    </TR>"+
+                    "<TR>\n" +
+"                        <TH>Variables</TH><TH>"+Archivo1.variables.size()+"</TH><TH>"+Archivo2.variables.size()+"</TH><TH>"+(Archivo1.variables.size()+Archivo2.variables.size())+"</TH>\n" +
+"                    </TR>"+
+                    "<TR>\n" +
+"                        <TH>Clases</TH><TH>"+1+"</TH><TH>"+1+"</TH><TH>"+2+"</TH>\n" +
+"                    </TR>"+
+                    "<TR>\n" +
+"                        <TH>MetodosFunciones</TH><TH>"+Archivo1.Metodos.size()+"</TH><TH>"+Archivo2.Metodos.size()+"</TH><TH>"+(Archivo1.Metodos.size()+Archivo2.Metodos.size())+"</TH>\n" +
+"                    </TR>"+
+                    "<TR>\n" +
+"                        <TH>MetodosFunciones</TH><TH>"+Archivo1.Comentarios.size()+"</TH><TH>"+Archivo2.Comentarios.size()+"</TH><TH>"+(Archivo1.Comentarios.size()+Archivo2.Comentarios.size())+"</TH>\n" +
+"                    </TR>"+
+                    "</TABLE>\n";
+            mensaje+="<img src=\"graficalineas_archivo1.js.jpeg\">";
+            mensaje+="<img src=\"graficalineas_archivo2.js.jpeg\">";
+            
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            mensaje+="<h1>DATOS FINALES:</h1>\n"
+                    + "<h3>Nombre:  Angel Geovany Aragón Pérez</h3>"
+                    + "<h3>Carnet:  201901055</h3>"
+                    + "<h3>Fecha y Hora:  "+dtf.format(LocalDateTime.now())+"</h3>";
+            mensaje+="</body>\n" +
+"        </html>";
+            archivo.write(mensaje);
+            archivo.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }
+    public void reporte_json(){
+        try {
+            FileWriter  archivo = new FileWriter("reporte_json.JSON");
+            String mensaje="{\n";
+            mensaje+="\t\"PuntajeGeneral\":"+pugeneral+",\n";
+            mensaje+="\t\"PuntajesEspecificos\":[\n";
+            mensaje+=pelista.recorrer_buscar();
+            mensaje+="}";
+            archivo.write(mensaje);
+            archivo.close();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void reporte_token(){
+        
+        try {
+            FileWriter  archivo = new FileWriter("reporte_token.html");
+            String mensaje="<html>"
+                    + "<head><title>REPORTE DE TOKEN</title></head>\n" +
+"            <body>\n" +
+"                <h1>REPORTE DE TOKEN</h1>\n" +
+"                <TABLE BORDER>\n" +
+"                    <TR>\n" +
+"                        <TH>No</TH> <TH>Lexema</TH><TH>Token</TH><TH>Linea</TH><TH>Columna</TH><TH>Archivo</TH>\n" +
+"                    </TR>";
+           int cont=1;
+           mensaje+="<TR>\n" +
+"                        <TD>"+cont+"</TD> <TD>"+Archivo1.NClase+"</TD><TD>Id_clase<TD></TD><TD></TD><TD>Archivo1</TD>\n" +
+"                    </TR>";
+           cont++;
+           mensaje+="<TR>\n" +
+"                        <TD>"+cont+"</TD> <TD>"+Archivo2.NClase+"</TD><TD>Id_clase<TD></TD><TD></TD><TD>Archivo2</TD>\n" +
+"                    </TR>";
+           cont++;
+           for(int i=0;i<Archivo1.Metodos.size();i++){
+               mensaje+="<TR>\n" +
+"                        <TD>"+cont+"</TD> <TD>"+Archivo1.Metodos.get(i)+"</TD><TD>id_Metodo<TD></TD><TD></TD><TD>Archivo1</TD>\n" +
+"                    </TR>";
+           cont++;
+           }
+           for(int i=0;i<Archivo2.Metodos.size();i++){
+               mensaje+="<TR>\n" +
+"                        <TD>"+cont+"</TD> <TD>"+Archivo2.Metodos.get(i)+"</TD><TD>id_Metodo<TD></TD><TD></TD><TD>Archivo2</TD>\n" +
+"                    </TR>";
+           cont++;
+           }
+           for(int i=0;i<Archivo1.variables.size();i++){
+               mensaje+="<TR>\n" +
+"                        <TD>"+cont+"</TD> <TD>"+Archivo1.variables.get(i)+"</TD><TD>id_variables<TD></TD><TD></TD><TD>Archivo1</TD>\n" +
+"                    </TR>";
+           cont++;
+           }
+           for(int i=0;i<Archivo2.variables.size();i++){
+               mensaje+="<TR>\n" +
+"                        <TD>"+cont+"</TD> <TD>"+Archivo2.variables.get(i)+"</TD><TD>id_variables<TD></TD><TD></TD><TD>Archivo2</TD>\n" +
+"                    </TR>";
+           cont++;
+           }
+           mensaje+=" </TABLE>\n" +
+"            </body>\n" +
+"        </html>";
+           archivo.write(mensaje);
+           archivo.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
     public void llenar1(){
         for (int i=0;i<Analizadores.A1.parserA1.id.length;i++){
             if(Analizadores.A1.parserA1.id[i]!=null){
@@ -299,24 +435,41 @@ public class Interfaz extends javax.swing.JFrame {
         }
         for(int i=0;i<Analizadores.A1.parserA1.larchivo.length;i++){
             if(Analizadores.A1.parserA1.larchivo[i]!=null){
-                System.out.println("archivo; "+Analizadores.A1.parserA1.larchivo[i]);
-                System.out.println("titulo; "+Analizadores.A1.parserA1.ltitulo[i]);
+                
                 String valor=ope.recorrer_buscar(Analizadores.A1.parserA1.larchivo[i]);
                 String valor2=ope.recorrer_buscar(Analizadores.A1.parserA1.ltitulo[i]);
-                if(valor!="" &&valor2==""){
+               
+                if(!valor.equalsIgnoreCase("") &&!valor2.equalsIgnoreCase("")){
+                    grafica_lineas(valor,valor2);
+                }
+                else if(!valor.equalsIgnoreCase("") &&valor2.equalsIgnoreCase("")){
                     grafica_lineas(valor,Analizadores.A1.parserA1.ltitulo[i]);
                 }
-                else if(valor=="" &&valor2!=""){
+                else if(valor.equalsIgnoreCase("") && !valor2.equalsIgnoreCase("")){
                     grafica_lineas(Analizadores.A1.parserA1.larchivo[i],valor2);
                 }
                 else{
                     grafica_lineas(Analizadores.A1.parserA1.larchivo[i],Analizadores.A1.parserA1.ltitulo[i]);
                 }
             }else{break;}
+        
         }
         
+        //grafica de pie
+        for(int i=0;i<Analizadores.A1.parserA1.qgpie.length;i++){
+            if(Analizadores.A1.parserA1.qgpie[i]!=null){
+                //System.out.println("Que es?; "+Analizadores.A1.parserA1.qgpie[i]);
+                
+                for (int j=0;j<Analizadores.A1.parserA1.vgpie[i].length;j++){
+                    if(Analizadores.A1.parserA1.vgpie[i][j]!=null){
+                           int a;
+                        //System.out.println("valor; "+Analizadores.A1.parserA1.vgpie[i][j]);
+                    }
+                }
+            }
+        }
         
-        //ope.recorrer();
+      
     }
     
     public void grafica_lineas(String archivo, String titulo){
@@ -522,8 +675,7 @@ public class Interfaz extends javax.swing.JFrame {
  
     }
     
-    
-    public static double pgeneral(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
+    public double pgeneral(copyanalyzer.ArchvioJS ar1,copyanalyzer.ArchvioJS ar2){
         double resultado=0;
         double clases_repetidas=0;
         double variables_repetidas=0;
@@ -531,52 +683,73 @@ public class Interfaz extends javax.swing.JFrame {
         double metodos_repetidos=0;
         //pgeneral clases
        if(ar1.NClase.toString().equalsIgnoreCase(ar2.NClase.toString()))
-            clases_repetidas+=2;
-        else if(ar1.lineasclass==ar2.lineasclass)
-            clases_repetidas+=2;
-        else if(ar1.Metodos.equals(ar2.Metodos))
-            clases_repetidas+=2;
+            clases_repetidas+=0.2;
+        if(ar1.lineasclass==ar2.lineasclass)
+            clases_repetidas+=0.4;
+        if(ar1.Metodos.equals(ar2.Metodos))
+            clases_repetidas+=0.4;
+        if(clases_repetidas>=0.6)
+            clases_repetidas=2;
+        else 
+            clases_repetidas=0;
         clases_repetidas/=2;
         resultado+=clases_repetidas*0.3;
-        //System.out.println(resultado);
+        System.out.println(resultado);
         //pgeneral metodos
-        for(int i=0;i<ar1.Metodos.size();i++){
-            for(int j=0;j<ar2.Metodos.size();j++){
-                if((ar1.Metodos.get(i).toString().equalsIgnoreCase(ar2.Metodos.get(j).toString()))&&(((ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())))||(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString())))){
-                    metodos_repetidos+=2;break;
+        if(ar1.Metodos.size()>=ar2.Metodos.size()){
+            for(int i=0;i<ar1.Metodos.size();i++){
+                if(pelista.buscar("archivo1.js","metodo",ar1.Metodos.get(i))>=0.6){
+                    metodos_repetidos+=1;
                 }
-                else if((ar1.Metodos.get(i)!=ar2.Metodos.get(j))&&((ar1.lineasmetodo.get(i).toString().equalsIgnoreCase(ar2.lineasmetodo.get(j).toString())))&&(ar1.cant_parametros.get(i).toString().equalsIgnoreCase(ar2.cant_parametros.get(j).toString()))){
-                    metodos_repetidos+=1;break;
+            }            
+        }
+        else{
+            for(int i=0;i<ar2.Metodos.size();i++){
+                if(pelista.buscar("archivo2.js","metodo",ar2.Metodos.get(i))>=0.6){
+                    metodos_repetidos+=1;
                 }
             }
         }
-        metodos_repetidos/=((ar1.Metodos.size())+(ar2.Metodos.size()));
+ 
+        metodos_repetidos/=((ar1.Metodos.size())+(ar2.Metodos.size()));       
         resultado+=metodos_repetidos*0.3;
-        //System.out.println(resultado);
         //pgeneral variables
-         for(int i=0;i<ar1.variables.size();i++){
-            for(int j=0;j<ar2.variables.size();j++){
-                if(ar1.variables.get(i).toString().equalsIgnoreCase(ar2.variables.get(j).toString())){
-                    variables_repetidas+=2;
-                    break;
+        if(ar1.variables.size()>=ar2.variables.size()){
+           for(int i=0;i<ar1.variables.size();i++){
+                if(pelista.buscar("archivo1.js","variable",ar1.variables.get(i))>=0.6){
+                    variables_repetidas+=1;
                 }
-            }
+           }
+        }
+        else{
+            for(int i=0;i<ar2.variables.size();i++){
+                if(pelista.buscar("archivo2.js","variable",ar2.variables.get(i))>=0.6){
+                    variables_repetidas+=1;
+                }
+           }
         }
         variables_repetidas/=((ar1.variables.size())+(ar2.variables.size()));
         resultado+=variables_repetidas*0.2;
-        //System.out.println(resultado);
+        System.out.println(resultado);
         //pgeneral comentarios
-        for(int i=0;i<ar1.Comentarios.size();i++){
-            for(int j=0;j<ar2.Comentarios.size();j++){
-                if(ar1.Comentarios.get(i).toString().equalsIgnoreCase(ar2.Comentarios.get(j).toString())){
-                    comentarios_repetidos+=2;
-                    break;
+        if(ar1.Comentarios.size()>=ar2.Comentarios.size()){
+            for(int i=0;i<ar1.Comentarios.size();i++){
+                if(pelista.buscar("archivo1.js","comentario",ar1.Comentarios.get(i))>=0.6){
+                    comentarios_repetidos+=1;
                 }
             }
         }
+        else{
+            for(int i=0;i<ar2.Comentarios.size();i++){
+                if(pelista.buscar("archivo2.js","comentario",ar2.Comentarios.get(i))>=0.6){
+                    comentarios_repetidos+=1;
+                }
+            }
+        }
+        
         comentarios_repetidos/=((ar1.Comentarios.size())+(ar2.Comentarios.size()));
         resultado+=comentarios_repetidos*0.2;
-        //System.out.println(resultado);
+        System.out.println(resultado);
         return resultado;
     }
     

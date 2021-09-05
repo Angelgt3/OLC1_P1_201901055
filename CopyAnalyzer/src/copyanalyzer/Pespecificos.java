@@ -44,6 +44,33 @@ public class Pespecificos {
         }
     }
     
+    public String recorrer_buscar(){
+        String texto="";
+        if(inicio!=null){
+            Npes aux=inicio;
+            do{
+                aux=aux.getSiguiente();
+                String temp2=aux.getid().replaceAll("\\s","");
+                texto+="\t\t{\n"
+                    + "\t\t\t\"archivo\": \""+aux.getarchivo()+"\",\n"
+                    + "\t\t\t\"tipo\": \""+aux.gettipo()+"\",\n"
+                    + "\t\t\t\"nombre\": \""+temp2+"\",\n"
+                    + "\t\t\t\"puntaje\": \""+aux.getpunteo()+"\"\n"
+                    + "\t\t},\n";
+            }
+            while(aux.getSiguiente()!=null);
+            String temp=aux.getid().replaceAll("\\s","");
+            texto+="\t\t{\n"
+                    + "\t\t\t\"archivo\": \""+aux.getarchivo()+"\",\n"
+                    + "\t\t\t\"tipo\": \""+aux.gettipo()+"\",\n"
+                    + "\t\t\t\"nombre\": \""+temp+"\",\n"
+                    + "\t\t\t\"puntaje\": \""+aux.getpunteo()+"\"\n"
+                    + "\t\t}\n";
+        }
+        texto+="\t]\n";
+        return texto;
+    }
+    
    
     
     public double buscar(String archivo,String tipo,String id){

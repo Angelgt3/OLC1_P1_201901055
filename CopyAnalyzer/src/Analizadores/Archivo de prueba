@@ -28,7 +28,7 @@ GenerarReporteEstadistico{
         Double pe12 = 0;
         Double pe15 = 0;
         Double pe16 = 0;
-
+        String archivo11 = "archivo1.js";
         String titulobarrasesperada = "Probabilidades esperadas para variables archivo Archivo1.js";
         String titulobarrasreal = "Probabilidades obtenidas para variables archivo Archivo1.js";
     }
@@ -42,7 +42,7 @@ GenerarReporteEstadistico{
 
     GraficaLineas{
         TiTulO: reporteResumen; 
-        ArChIvO: "archivo1.js";
+        ArChIvO: archivo11;
     }
 
     graficalineas{
